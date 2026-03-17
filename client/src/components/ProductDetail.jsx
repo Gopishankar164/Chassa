@@ -162,7 +162,7 @@ export default function ProductDetail() {
           {/* Breadcrumb */}
           <div className="pd-breadcrumb">
             <button onClick={() => navigate("/home")} className="pd-back">
-              <ChevronLeft size={16} /> Back to Shop
+              <ChevronLeft size={16} /> Back to Products
             </button>
             <span className="pd-bc-sep">/</span>
             <span className="pd-bc-cat">{product.category}</span>
@@ -196,7 +196,7 @@ export default function ProductDetail() {
 
             {/* Info */}
             <div className="pd-info">
-              <p className="pd-category">{product.category}</p>
+              <p className="pd-category">{product.category || "Industrial Component"}</p>
               <h1 className="pd-name">{product.name}</h1>
               <p className="pd-brand">by {product.brand}</p>
 
@@ -220,6 +220,7 @@ export default function ProductDetail() {
               </div>
 
               {/* Price */}
+              <div className="pd-price-label-tag">Quotation / Price</div>
               <div className="pd-price-section">
                 <span className="pd-price-main">₹{displayPrice.toLocaleString()}</span>
                 {hasDiscount && (
@@ -287,25 +288,18 @@ export default function ProductDetail() {
                   disabled={addingCart}
                 >
                   <ShoppingBag size={18} />
-                  {addingCart ? "Adding..." : "Add to Cart"}
+                  {addingCart ? "Adding..." : "Add to Inquiry"}
                 </button>
                 <button className="btn-outline pd-buy-btn" onClick={() => handleAddToCart(true)}>
-                  Buy Now
-                </button>
-                <button
-                  className={`pd-wish-btn ${inWishlist ? "active" : ""}`}
-                  onClick={handleWishlist}
-                  title={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                >
-                  <Heart size={20} fill={inWishlist ? "var(--primary)" : "none"} />
+                  Request Quote
                 </button>
               </div>
 
               {/* Delivery badges */}
               <div className="pd-badges">
-                <div className="pd-badge"><Truck size={16} /> Free delivery on orders above ₹1000</div>
-                <div className="pd-badge"><RotateCcw size={16} /> 30-day easy returns</div>
-                <div className="pd-badge"><Shield size={16} /> 100% authentic products</div>
+                <div className="pd-badge"><Truck size={16} /> Pan-India delivery available</div>
+                <div className="pd-badge"><RotateCcw size={16} /> Custom specifications accepted</div>
+                <div className="pd-badge"><Shield size={16} /> Quality certified components</div>
               </div>
 
               {/* Details */}

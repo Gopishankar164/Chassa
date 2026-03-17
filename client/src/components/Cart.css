@@ -1,20 +1,34 @@
 .cart-page {
-  padding: 80px 20px 40px;
+  padding: 100px 20px 60px;
   min-height: 100vh;
   background: var(--bg);
   margin: 0;
   width: 100%;
   box-sizing: border-box;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cart-title {
   text-align: center;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
   font-family: var(--font-serif);
-  margin-bottom: 3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
   animation: slideDown 0.6s ease-out;
+}
+
+.cart-page-subtitle {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  margin-bottom: 3rem;
 }
 
 @keyframes slideDown {
@@ -66,7 +80,7 @@
 
 .cart-card {
   background: var(--bg-card);
-  border-radius: 1rem;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-md);
   padding: 1rem;
   display: flex;
@@ -75,7 +89,8 @@
   transition: all 0.3s ease;
   min-height: 380px;
   height: fit-content;
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--primary);
   position: relative;
   overflow: hidden;
   animation: cardSlideUp 0.6s ease-out backwards;
@@ -127,17 +142,18 @@
 .cart-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(0,176,255,0.12);
 }
 
 .cart-image {
   width: 100%;
   height: 160px;
   object-fit: contain;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-sm);
   transition: all 0.4s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: #F5EFE6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: var(--bg-secondary);
 }
 
 .cart-card:hover .cart-image {
@@ -262,7 +278,8 @@
 .total-price {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--accent);
+  font-family: var(--font-serif);
 }
 
 .cart-actions {
@@ -353,20 +370,23 @@
   color: white;
   font-weight: 700;
   padding: 0.85rem 1.5rem;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
-  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  font-size: 0.75rem;
   flex: 2;
   box-shadow: var(--shadow-sm);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1em;
+  font-family: var(--font-serif);
 }
 
 .proceed-btn:hover {
-  background: var(--primary-light);
+  background: var(--accent);
+  color: #000;
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,176,255,0.3);
 }
 
 .proceed-btn:active {
@@ -403,8 +423,8 @@
 .loader {
   width: 50px;
   height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #8B1A1A;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

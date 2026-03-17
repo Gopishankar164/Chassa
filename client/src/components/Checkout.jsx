@@ -293,7 +293,7 @@ const Checkout = () => {
       <Navbar />
       <div className="checkout-container">
         <div className="checkout-header">
-          <h1>Checkout</h1>
+          <h1>Submit Inquiry</h1>
           <button onClick={() => navigate('/cart')} className="back-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
               style={{ marginRight: '6px', verticalAlign: 'middle' }}>
@@ -308,7 +308,7 @@ const Checkout = () => {
         <div className="checkout-content">
           {/* ── Order Summary ──────────────────────────────── */}
           <div className="order-summary">
-            <h2>Order Summary</h2>
+            <h2>Inquiry Summary</h2>
             <div className="order-item">
               <img
                 src={
@@ -349,7 +349,7 @@ const Checkout = () => {
 
           {/* ── Shipping Form ──────────────────────────────── */}
           <div className="shipping-form">
-            <h2>Shipping Address</h2>
+            <h2>Company / Delivery Details</h2>
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={(e) => e.preventDefault()}>

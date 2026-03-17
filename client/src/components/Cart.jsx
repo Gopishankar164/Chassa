@@ -74,10 +74,11 @@ const Cart = () => {
     <>
       <Navbar />
       <div className="cart-page">
-        <h2 className="cart-title">Your Cart</h2>
+        <h2 className="cart-title">Inquiry Basket</h2>
+        <p className="cart-page-subtitle">// ITEMS SELECTED FOR QUOTATION</p>
         {cart.length === 0 ? (
           <div className="empty-cart">
-            <p>Your cart is empty 🛒</p>
+            <p>Your inquiry basket is empty</p>
           </div>
         ) : (
           <div className="cart-container">

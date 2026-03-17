@@ -165,10 +165,10 @@ export default function ShopPage() {
             <div className="shop-header-inner">
               <div>
                 <h1 className="shop-title">
-                  {selectedCategory !== "all" ? selectedCategory : "All Products"}
+                  {selectedCategory !== "all" ? selectedCategory : "Industrial Products"}
                 </h1>
                 <p className="shop-count">
-                  {filtered.length} products {searchQuery && `for "${searchQuery}"`}
+                  {filtered.length} items {searchQuery && `matching "${searchQuery}"`}
                 </p>
               </div>
               <div className="shop-controls">
@@ -176,9 +176,9 @@ export default function ShopPage() {
                 <div className="shop-search-wrap">
                   <Search size={16} className="shop-search-icon" />
                   <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
+                  type="text"
+                  placeholder="Search components..."
+                  value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     className="shop-search-input"
                   />
@@ -196,10 +196,10 @@ export default function ShopPage() {
                     value={sortBy}
                     onChange={e => setSortBy(e.target.value)}
                   >
-                    <option value="default">Sort: Featured</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="discount">Best Discount</option>
+                    <option value="default">Sort: Default</option>
+                    <option value="price-asc">Quotation: Low to High</option>
+                    <option value="price-desc">Quotation: High to Low</option>
+                    <option value="discount">Best Offer</option>
                   </select>
                   <ChevronDown size={14} className="sort-icon" />
                 </div>
@@ -272,9 +272,10 @@ export default function ShopPage() {
 
                         </div>
                         <div className="pc-info">
-                          <p className="pc-brand">{product.brand || product.category}</p>
+                          <p className="pc-brand">{product.brand || product.category || "Industrial Component"}</p>
                           <h3 className="pc-name">{product.name}</h3>
                           <div className="pc-price">
+                            <span className="pc-price-label">Quotation / Price</span>
                             <span className="pc-price-current">
                               ₹{hasDiscount ? product.discountedPrice : product.price}
                             </span>
@@ -282,6 +283,7 @@ export default function ShopPage() {
                               <span className="pc-price-original">₹{product.price}</span>
                             )}
                           </div>
+                          <div className="pc-quote-btn">Request Quote →</div>
                         </div>
                       </div>
                     </Link>

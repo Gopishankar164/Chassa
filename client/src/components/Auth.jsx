@@ -22,6 +22,13 @@ export default function AuthPage() {
   const location = useLocation();
   const { setUser } = useCart();
 
+  // Auth page left panel content
+  const leftPanelContent = {
+    login: { heading: "Welcome Back", sub: "Sign in to your Chassa Engineering account" },
+    signup: { heading: "Create Account", sub: "Join Chassa Engineering Drives" },
+    forgot: { heading: "Reset Password", sub: "Enter your email for a reset link" }
+  };
+
   const handleGoogleSuccess = async (user, token) => {
     try {
       setLoading(true);
@@ -142,26 +149,33 @@ export default function AuthPage() {
   };
 
   const titles = {
-    login: { heading: "Welcome back", sub: "Sign in to your Aaradhana account" },
-    signup: { heading: "Create account", sub: "Join us and start shopping" },
-    forgot: { heading: "Reset password", sub: "Enter your email for a reset link" }
+    login: { heading: "Welcome Back", sub: "Sign in to your Chassa Engineering account" },
+    signup: { heading: "Create Account", sub: "Join Chassa Engineering Drives" },
+    forgot: { heading: "Reset Password", sub: "Enter your email for a reset link" }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-brand-col">
         <Link to="/" className="auth-logo">
-          <span className="logo-text">aaradhana</span><span className="logo-dot">✦</span>
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" style={{ flexShrink: 0 }}>
+            <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#00B0FF" strokeWidth="1.5" fill="none"/>
+            <circle cx="14" cy="14" r="3" fill="#00B0FF"/>
+        </svg>
+        <div>
+          <span className="logo-text" style={{ fontSize: '1.3rem', letterSpacing: '0.15em' }}>CHASSA</span>
+        <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '0.45rem', color: 'var(--accent)', letterSpacing: '0.2em', marginTop: '2px' }}>ENGINEERING DRIVES</span>
+        </div>
         </Link>
         <div className="auth-brand-content">
-          <h2>Discover Fashion <br />Made for <em>You</em></h2>
-          <p>Shop the finest ethnic wear, contemporary styles, and accessories — all in one place.</p>
-          <div className="auth-features">
-            {["Free delivery on orders ₹499+", "30-day easy returns", "Exclusive member offers", "100% secure payments"].map(f => (
-              <div key={f} className="auth-feature"><span className="af-check">✓</span>{f}</div>
-            ))}
-          </div>
-        </div>
+          <h2>Precision Built.<br /><em>Industry Proven.</em></h2>
+              <p>Source industrial components, automation systems, and casting solutions from Coimbatore's leading engineering firm.</p>
+              <div className="auth-features">
+                {["CNC components ±0.01 mm precision", "Custom manufacturing accepted", "Pan-India delivery available", "ISO quality standards"].map(f => (
+                  <div key={f} className="auth-feature"><span className="af-check">✓</span>{f}</div>
+                ))}
+              </div>
+            </div>
         <div className="auth-decor-circles">
           <div className="ac1" /><div className="ac2" /><div className="ac3" />
         </div>

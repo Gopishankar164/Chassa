@@ -55,14 +55,13 @@ const CustomerSupport = () => {
     {
       icon: (
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 8V16C21 18.21 19.21 20 17 20H7C4.79 20 3 18.21 3 16V8C3 5.79 4.79 4 7 4H17C19.21 4 21 5.79 21 8Z" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M7 8H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M7 12H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M7 16H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M12 8V12L15 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="12" cy="12" r="2" fill="currentColor" />
         </svg>
       ),
-      title: 'Order Issues',
-      description: 'Track orders, delivery issues, order cancellation',
+      title: 'Track My Order',
+      description: 'Check order status, delivery updates, shipment tracking',
       action: () => navigate('/my-orders')
     },
     {
@@ -73,21 +72,21 @@ const CustomerSupport = () => {
           <path d="M7 14H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       ),
-      title: 'Payment & Refunds',
-      description: 'Payment methods, refund status, billing issues',
+      title: 'Quotation & Payment',
+      description: 'Request quotations, payment methods, billing queries',
       action: () => setActiveTab('contact')
     },
     {
       icon: (
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 12C4 12 7.5 18 12 18C16.5 18 20 12 20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M12 6L14 4M12 6L10 4M12 6V18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M12 18L10 20M12 18L14 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
         </svg>
       ),
-      title: 'Returns & Exchanges',
-      description: 'Return policy, exchange process, return status',
-      action: () => navigate('/my-orders')
+      title: 'Technical Specifications',
+      description: 'Drawing submissions, material specs, custom requirements',
+      action: () => setActiveTab('contact')
     },
     {
       icon: (
@@ -104,24 +103,28 @@ const CustomerSupport = () => {
 
   const faqs = [
     {
-      question: 'Where can I see Return or Exchange options?',
-      answer: 'Once your order is Delivered, you can see the Return/Exchange option in the My Orders page. Returns are accepted within 30 days of delivery.'
+      question: 'What is your manufacturing precision for CNC components?',
+      answer: 'Chassa Engineering Drives manufactures CNC components to ±0.01 mm tolerance. We use high-precision CNC turning and milling centers with in-process inspection to maintain these standards.'
     },
     {
-      question: 'How long does delivery take?',
-      answer: "Standard delivery takes 3–5 business days. We'll send you tracking updates via email at every step."
+      question: 'How do I submit a custom component requirement?',
+      answer: 'Submit your technical drawings (PDF/DXF/STEP) or specifications via the Contact Us form. Our engineering team will review and respond with a quotation within 24–48 hours.'
     },
     {
-      question: 'What is your return policy?',
-      answer: 'We offer 30-day returns for most items. Items must be unused and in original packaging. Contact us at aaradhanastore@gmail.com to initiate a return.'
+      question: 'What materials do you work with?',
+      answer: 'We work with Aluminum (A360, A380), Stainless Steel, Cast Iron, Gun Metal, Brass, and mild steel. Custom alloys can be sourced on request.'
     },
     {
-      question: 'How can I track my order?',
-      answer: 'You can track your order from the "My Orders" section in your account. Use the "Track Order" button next to any order to see live status updates.'
+      question: 'What is the typical lead time for orders?',
+      answer: 'Lead times range from 7 to 21 working days depending on component complexity, quantity, and current production load. Urgent orders can be accommodated — contact us for scheduling.'
     },
     {
-      question: 'What payment methods do you accept?',
-      answer: 'We currently accept Cash on Delivery. Online payment options (UPI, cards, net banking) are coming soon!'
+      question: 'Do you offer surface finishing and heat treatment?',
+      answer: 'Yes. We offer surface finishing to 50–60 HRC hardness, including grinding, lapping, and protective coatings. Heat treatment services are also available for select materials.'
+    },
+    {
+      question: 'Can you supply VFD drives and automation panels?',
+      answer: 'Yes. We supply and integrate Variable Frequency Drives (VFD), PLC control systems, HMI/SCADA panels, and IoT 4.0 solutions. Contact our automation team for system design.'
     }
   ];
 
@@ -139,8 +142,8 @@ const CustomerSupport = () => {
               <path d="M12 19V21" stroke="#667eea" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </div>
-          <h1>Customer Support</h1>
-          <p>We're here to help! Get quick answers or contact our support team.</p>
+          <h1>Technical Support & Inquiry</h1>
+          <p>Submit technical requirements, track orders, or contact our engineering team.</p>
         </div>
 
         {/* Tabs */}
@@ -229,9 +232,9 @@ const CustomerSupport = () => {
                       </svg>
                     </div>
                     <div className="method-details">
-                      <h3>Phone Support</h3>
-                      <p>+91 73588 05222</p>
-                      <span>Mon–Sat, 9 AM – 6 PM</span>
+                      <h3>Phone / WhatsApp</h3>
+                      <p>+91 98765 43210</p>
+                      <span>Mon–Sat, 9 AM – 6 PM IST</span>
                     </div>
                   </div>
                   <div className="contact-method">
@@ -242,8 +245,8 @@ const CustomerSupport = () => {
                       </svg>
                     </div>
                     <div className="method-details">
-                      <h3>Email Support</h3>
-                      <p>aaradhanastore@gmail.com</p>
+                      <h3>Email</h3>
+                      <p>enquiry@chassadrives.com</p>
                       <span>Response within 24 hours</span>
                     </div>
                   </div>
@@ -254,9 +257,9 @@ const CustomerSupport = () => {
                       </svg>
                     </div>
                     <div className="method-details">
-                      <h3>Live Chat</h3>
-                      <p>Chat with our team</p>
-                      <span>Available 24/7</span>
+                      <h3>Office Location</h3>
+                      <p>Coimbatore, Tamil Nadu</p>
+                      <span>PIN: 641 001, India</span>
                     </div>
                   </div>
                 </div>
@@ -268,7 +271,7 @@ const CustomerSupport = () => {
                   <div style={{ textAlign: 'center', padding: '40px 0' }}>
                     <div style={{ fontSize: '3rem', marginBottom: 16 }}>✅</div>
                     <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: 10, color: '#10b981' }}>Message Sent!</h3>
-                    <p style={{ color: '#666', marginBottom: 24 }}>We'll respond to your query within 24 hours at <strong>aaradhanastore@gmail.com</strong></p>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>Our engineering team will respond within 24 hours at <strong>enquiry@chassadrives.com</strong></p>
                     <button className="submit-btn" onClick={() => { setSubmitted(false); setActiveTab('help'); }}>Back to Help Center</button>
                   </div>
                 ) : (
@@ -306,11 +309,11 @@ const CustomerSupport = () => {
                         required
                       >
                         <option value="">Select Subject</option>
+                        <option value="quotation-request">Quotation Request</option>
+                        <option value="technical-drawing">Submit Technical Drawing</option>
+                        <option value="custom-component">Custom Component Inquiry</option>
+                        <option value="automation-inquiry">Automation / VFD / PLC</option>
                         <option value="order-issue">Order Issue</option>
-                        <option value="payment-issue">Payment Issue</option>
-                        <option value="return-exchange">Return/Exchange</option>
-                        <option value="account-help">Account Help</option>
-                        <option value="shipping-delay">Shipping Delay</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
@@ -318,7 +321,7 @@ const CustomerSupport = () => {
                       name="message"
                       value={contactForm.message}
                       onChange={handleInputChange}
-                      placeholder="Describe your issue or question..."
+                      placeholder="Describe your requirements, specifications, or query..."
                       rows="5"
                       required
                     />

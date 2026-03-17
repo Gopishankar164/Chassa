@@ -43,6 +43,37 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/orders/pending-payments")
+    public ResponseEntity<List<Order>> getPendingPaymentOrders() {
+        try {
+            List<Order> orders = orderRepository.findAll().stream()
+                    .filter(o -> "PENDING".equalsIgnoreCase(o.getPaymentStatus()))
+                    .collect(java.util.stream.Collectors.toList());
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new java.util.ArrayList<>());
+        }
+    }
+
+    @GetMapping("/orders/payment-summary")
+    public ResponseEntity<Map<String, Object>> getPaymentSummary() {
+        try {
+            List<Order> orders = orderRepository.findAll();
+            double totalRevenue = orders.stream().mapToDouble(Order::getTotal).sum();
+            long completedPayments = orders.stream().filter(o -> "COMPLETED".equalsIgnoreCase(o.getPaymentStatus())).count();
+            long pendingPayments = orders.stream().filter(o -> "PENDING".equalsIgnoreCase(o.getPaymentStatus())).count();
+            double pendingAmount = orders.stream().filter(o -> "PENDING".equalsIgnoreCase(o.getPaymentStatus())).mapToDouble(Order::getTotal).sum();
+            return ResponseEntity.ok(Map.of(
+                "totalRevenue", totalRevenue,
+                "completedPayments", completedPayments,
+                "pendingPayments", pendingPayments,
+                "pendingAmount", pendingAmount
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("totalRevenue", 0, "completedPayments", 0, "pendingPayments", 0, "pendingAmount", 0));
+        }
+    }
+
     @GetMapping("/orders/statistics")
     public ResponseEntity<Map<String, Object>> getOrderStatistics() {
         try {

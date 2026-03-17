@@ -14,7 +14,7 @@ export const orderService = {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch orders');
+      throw new Error(`${response.status}: Failed to fetch orders`);
     }
 
     return response.json();
@@ -68,7 +68,7 @@ export const orderService = {
 
   // Update payment status
   async updatePaymentStatus(orderId, paymentStatus, remarks = '') {
-    const response = await fetch(`${API_BASE_URL}/orders/${orderId}/update-payment-status`, {
+    const response = await fetch(`${API_BASE_URL}/admin/orders/${orderId}/update-payment-status`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,

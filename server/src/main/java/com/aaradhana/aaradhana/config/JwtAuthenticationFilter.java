@@ -74,12 +74,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                path.equals("/api/users/login") ||
                path.equals("/api/users/create") ||
                path.equals("/api/admin/login") ||
+               path.equals("/api/auth/google") ||
                path.equals("/api/auth/admin/login") ||
+               path.equals("/api/auth/create-test-admin") ||
                path.equals("/api/users/verify-email") ||
-                path.equals("/api/users/resend-verification") ||
-                path.equals("/api/users/forgot-password") ||
-                path.equals("/api/users/reset-password") ||
+               path.equals("/api/users/resend-verification") ||
+               path.equals("/api/users/forgot-password") ||
+               path.equals("/api/users/reset-password") ||
                path.equals("/api/dashboard/stats") ||
+               path.startsWith("/api/reviews") ||
                (path.equals("/api/payment/webhook") && "POST".equals(method));
         
         logger.info("Checking if {} {} is public: {}", method, path, isPublic);

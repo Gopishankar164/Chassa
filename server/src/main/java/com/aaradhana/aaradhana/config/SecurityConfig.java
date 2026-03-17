@@ -37,7 +37,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/health/**").permitAll()
                         .requestMatchers("/api/users/login", "/api/users/create").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/google").permitAll()
+                        .requestMatchers("/api/auth/admin/login").permitAll()
+                        .requestMatchers("/api/auth/create-test-admin").permitAll()
                         .requestMatchers("/api/admin/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/payment/webhook").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/complaints").permitAll()

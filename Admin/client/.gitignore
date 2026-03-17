@@ -1,0 +1,60 @@
+# ============================================================
+#  Admin/client/.gitignore — Vite + React (Admin panel)
+# ============================================================
+
+
+# ── Secrets & environment variables ─────────────────────────
+.env
+.env.*
+!.env.example
+
+
+# ── Dependencies ─────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+
+# ── Build output ─────────────────────────────────────────────
+dist/
+dist-ssr/
+build/
+
+
+# ── Vite cache ───────────────────────────────────────────────
+.vite/
+vite.config.js.timestamp-*
+
+
+# ── Testing & coverage ───────────────────────────────────────
+coverage/
+*.lcov
+.nyc_output/
+
+
+# ── TypeScript ───────────────────────────────────────────────
+*.tsbuildinfo
+
+
+# ── ESLint cache ─────────────────────────────────────────────
+.eslintcache
+
+
+# ── Editor configs ───────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+
+# ── OS ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+
+# ── Misc ─────────────────────────────────────────────────────
+*.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

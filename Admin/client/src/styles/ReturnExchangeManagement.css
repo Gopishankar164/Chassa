@@ -1,0 +1,174 @@
+/* ====== ADMIN RETURN & EXCHANGE MANAGEMENT STYLES ====== */
+
+.return-mgmt-container {
+    padding: 30px;
+    background: #f1f5f9;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.mgmt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.mgmt-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.refresh-btn {
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+/* Table Design */
+.table-wrapper {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.mgmt-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.mgmt-table th {
+    text-align: left;
+    padding: 16px;
+    border-bottom: 2px solid #f1f5f9;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.mgmt-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+/* Row Hover */
+.mgmt-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Status Tags & Pills */
+.tag {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.tag-return {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.tag-exchange {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pill-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pill-approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.pill-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.pill-completed {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* Buttons */
+.action-row {
+    display: flex;
+    gap: 8px;
+}
+
+.act-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.act-btn.approve {
+    background: #10b981;
+    color: white;
+}
+
+.act-btn.reject {
+    background: #ef4444;
+    color: white;
+}
+
+.act-btn.complete {
+    background: #6366f1;
+    color: white;
+}
+
+.act-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.reason-text {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #64748b;
+}
+
+/* Error/Empty states */
+.admin-error {
+    background: #fef2f2;
+    color: #b91c1c;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}

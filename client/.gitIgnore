@@ -1,0 +1,44 @@
+# ============================================================
+#  client/.gitignore — Vite + React (User-facing frontend)
+# ============================================================
+
+
+# ── Secrets & environment variables ─────────────────────────
+.env
+.env.*
+!.env.example
+
+
+# ── Dependencies ─────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+
+# ── Build output ─────────────────────────────────────────────
+dist/
+dist-ssr/
+build/
+
+
+# ── Vite cache ───────────────────────────────────────────────
+.vite/
+vite.config.js.timestamp-*
+
+
+# ── Testing & coverage ───────────────────────────────────────
+coverage/
+*.lcov
+.nyc_output/
+
+
+# ── TypeScript ───────────────────────────────────────────────
+*.tsbuildinfo
+
+
+# ── ESLint cache ─────────────────────────────────────────────
+.eslintcache
+
+
+# ── Misc ─────────────────────────────────────────────────────
+*.local

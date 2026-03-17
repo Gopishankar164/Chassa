@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f7fb;
+  overflow-x: hidden;
+}
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(.4, 0, .2, 1);
+  margin-left: 255px;
+  min-width: 0;
+}
+
+.admin-main.sidebar-closed {
+  margin-left: 68px;
+}
+
+.admin-content {
+  flex: 1;
+  background: #f6f7fb;
+  overflow-y: auto;
+  min-height: calc(100vh - 68px);
+}
+
+@media (max-width: 768px) {
+
+  .admin-main,
+  .admin-main.sidebar-closed {
+    margin-left: 0;
+  }
+}

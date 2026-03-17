@@ -68,8 +68,8 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
                 "http://localhost:5174",
                 "http://localhost:5173",
-                "https://aaradhana-n657.vercel.app/",
-                "https://aaradhana-taupe.vercel.app"));
+                "https://admin-chassa.vercel.app/",
+                "https://chassa.vercel.app"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
 

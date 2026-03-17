@@ -42,8 +42,8 @@ const ReturnExchangeManagement = () => {
         <div className="page-wrap">
             <div className="page-header-bar">
                 <div>
-                    <h2 className="page-heading">Return &amp; Exchange</h2>
-                    <p className="page-heading-sub">{requests.length} total requests</p>
+                    <h2 className="page-heading">Returns &amp; Exchange</h2>
+                    <p className="page-heading-sub">{requests.length} total return/exchange requests</p>
                 </div>
                 <button className="btn-secondary" onClick={fetchRequests}>
                     <RefreshCw size={14} /> Refresh
@@ -56,8 +56,8 @@ const ReturnExchangeManagement = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Order</th>
-                                <th>Customer</th>
+                                <th>Inquiry Ref</th>
+                                <th>Client</th>
                                 <th>Type</th>
                                 <th>Reason</th>
                                 <th>Status</th>
@@ -67,7 +67,7 @@ const ReturnExchangeManagement = () => {
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="8"><div className="state-loading">Loading requests...</div></td></tr>
+                                <tr><td colSpan="8"><div className="state-loading">Loading return requests...</div></td></tr>
                             ) : error ? (
                                 <tr><td colSpan="8">
                                     <div className="state-error">
@@ -77,7 +77,7 @@ const ReturnExchangeManagement = () => {
                                 </td></tr>
                             ) : requests.length === 0 ? (
                                 <tr><td colSpan="8">
-                                    <div className="state-empty"><ArrowLeftRight size={40} /><p>No return/exchange requests</p></div>
+                                    <div className="state-empty"><ArrowLeftRight size={40} /><p>No return / exchange requests</p></div>
                                 </td></tr>
                             ) : requests.map(req => (
                                 <tr key={req.id}>

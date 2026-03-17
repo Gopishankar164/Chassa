@@ -8,10 +8,10 @@ import '../styles/Sidebar.css';
 
 const menuItems = [
   { path: '/admin/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
-  { path: '/admin/products', label: 'Products', icon: <Package size={18} /> },
-  { path: '/admin/orders', label: 'Orders', icon: <ShoppingCart size={18} /> },
+  { path: '/admin/products', label: 'Eng. Products', icon: <Package size={18} /> },
+  { path: '/admin/orders', label: 'Client Inquiries', icon: <ShoppingCart size={18} /> },
   { path: '/admin/return-exchange', label: 'Returns', icon: <RefreshCcw size={18} /> },
-  { path: '/admin/users', label: 'Users', icon: <Users size={18} /> },
+  { path: '/admin/users', label: 'Clients', icon: <Users size={18} /> },
   { path: '/admin/payments', label: 'Payments', icon: <CreditCard size={18} /> },
   { path: '/admin/complaints', label: 'Complaints', icon: <MessageCircleWarning size={18} /> },
   { path: '/admin/settings', label: 'Settings', icon: <Settings size={18} /> },
@@ -23,11 +23,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo-container">
-            <div className="sidebar-logo-circle">A</div>
+            <div className="sidebar-logo-circle">
+              <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+                <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#00B0FF" strokeWidth="1.5" fill="none"/>
+                <circle cx="14" cy="14" r="3" fill="#00B0FF"/>
+              </svg>
+            </div>
             {isOpen && (
               <div className="sidebar-brand">
-                <span className="sidebar-brand-name">Aaradhana</span>
-                <span className="sidebar-brand-sub">Admin Panel</span>
+                <span className="sidebar-brand-name">CHASSA</span>
+                <span className="sidebar-brand-sub">ENGINEERING DRIVES</span>
               </div>
             )}
           </div>
@@ -52,7 +57,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {isOpen && (
           <div className="sidebar-footer">
-            <div className="sidebar-footer-text">Aaradhana © 2025</div>
+            <div className="sidebar-footer-text">CHASSA ENGINEERING © 2025</div>
           </div>
         )}
       </aside>

@@ -603,7 +603,80 @@
 .modal-actions {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+/* Industrial form styles */
+.product-form-container {
+  padding: 0;
+}
+
+.product-form-container .card-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ad-text);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ad-border);
+}
+
+.product-form-container .form-group {
+  margin-bottom: 16px;
+}
+
+.product-form-container .form-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ad-cyan);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.product-form-container .form-input,
+.product-form-container .form-textarea,
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px 13px;
+  background: #0A0E1A;
+  border: 1px solid var(--ad-border);
+  border-radius: var(--ad-r);
+  color: var(--ad-text);
+  font-size: 13px;
+  font-family: 'Barlow', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.product-form-container .form-input:focus,
+.product-form-container .form-textarea:focus,
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--ad-cyan);
+  box-shadow: 0 0 0 2px rgba(0,176,255,0.12);
+}
+
+.product-form-container .form-input::placeholder,
+.product-form-container .form-textarea::placeholder {
+  color: var(--ad-muted);
+}
+
+.product-form-container .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.product-form-container select.form-input {
+  cursor: pointer;
+  background: #0A0E1A;
+  color: var(--ad-text);
 }
 
 .btn-save {

@@ -49,8 +49,8 @@ const UserManagement = () => {
     <div className="page-wrap">
       <div className="page-header-bar">
         <div>
-          <h2 className="page-heading">User Management</h2>
-          <p className="page-heading-sub">{usersWithOrders.length} customers with orders</p>
+          <h2 className="page-heading">Client Management</h2>
+          <p className="page-heading-sub">{usersWithOrders.length} clients with orders</p>
         </div>
       </div>
 
@@ -59,10 +59,10 @@ const UserManagement = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Customer</th>
+                <th>Client</th>
                 <th>Total Orders</th>
-                <th>Total Spent</th>
-                <th>Pending Orders</th>
+                <th>Total Value</th>
+                <th>Pending Inquiries</th>
                 <th>Pending Payments</th>
                 <th>Last Order</th>
                 <th>Actions</th>
@@ -70,7 +70,7 @@ const UserManagement = () => {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7"><div className="state-loading">Loading customers...</div></td></tr>
+                <tr><td colSpan="7"><div className="state-loading">Loading clients...</div></td></tr>
               ) : error ? (
                 <tr><td colSpan="7">
                   <div className="state-error">
@@ -80,7 +80,7 @@ const UserManagement = () => {
                 </td></tr>
               ) : usersWithOrders.length === 0 ? (
                 <tr><td colSpan="7">
-                  <div className="state-empty"><Package size={40} /><p>No customers with orders yet</p></div>
+                  <div className="state-empty"><Package size={40} /><p>No clients with orders yet</p></div>
                 </td></tr>
               ) : usersWithOrders.map((user, i) => (
                 <tr key={i}>
@@ -106,7 +106,7 @@ const UserManagement = () => {
                   <td>
                     <button className="btn-primary" style={{ fontSize: 12, padding: '8px 14px' }}
                       onClick={() => setSelectedUser({ email: user.customerEmail, name: user.customerName, ...user })}>
-                      View Orders
+                      View History
                     </button>
                   </td>
                 </tr>

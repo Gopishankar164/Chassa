@@ -103,20 +103,14 @@ const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submit
 
     // Check if at least one image is present (either new file or existing preview)
     const hasFrontImage = frontImageFile || (frontImagePreview && frontImagePreview.startsWith('http'));
-    const hasBackImage = backImageFile || (backImagePreview && backImagePreview.startsWith('http'));
 
     if (!hasFrontImage) {
-      alert('Front image is mandatory');
+      alert('Component image is mandatory');
       return;
     }
 
     if (!formState.description || formState.description.trim() === '') {
-      alert('Description is mandatory');
-      return;
-    }
-
-    if (!sizesInput || sizesInput.trim() === '') {
-      alert('At least one size is mandatory');
+      alert('Technical description is mandatory');
       return;
     }
 
@@ -156,8 +150,6 @@ const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submit
       // Prepare product data with Supabase URLs
       const productData = {
         ...formState,
-        availableSizes: selectedSizes,
-        size: sizesInput.split(',').map(s => s.trim()).filter(Boolean),
         images: imageUrls.length > 0 ? imageUrls : undefined
       };
 
@@ -175,111 +167,104 @@ const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submit
       <form onSubmit={handleSubmit}>
         <h3 className="card-title">{title}</h3>
 
-        {/* Basic Product Info */}
+        {/* Component Name */}
         <div className="form-group">
-          <label className="form-label">Product Name <span style={{ color: 'red' }}>*</span></label>
+          <label className="form-label">Component Name <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
           <input
             className="form-input"
             type="text"
             value={formState.name || ''}
             onChange={e => setFormState({ ...formState, name: e.target.value })}
+            placeholder="e.g. CNC Cam Housing, Rear Wheel Hub"
             required
           />
         </div>
 
+        {/* Price & Availability */}
         <div className="form-row">
           <div className="form-group">
-            <label className="form-label">Price <span style={{ color: 'red' }}>*</span></label>
+            <label className="form-label">Estimated Price / Quote <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
             <input
               className="form-input"
               type="number"
               step="0.01"
               value={formState.price || ''}
               onChange={e => setFormState({ ...formState, price: e.target.value })}
+              placeholder="e.g. 1500"
               required
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Stock <span style={{ color: 'red' }}>*</span></label>
+            <label className="form-label">Production Capacity / Availability <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
             <input
               className="form-input"
               type="number"
               value={formState.stockQuantity ?? formState.stock ?? ''}
               onChange={e => setFormState({ ...formState, stockQuantity: Number(e.target.value), stock: Number(e.target.value) })}
+              placeholder="e.g. 100"
               required
             />
           </div>
         </div>
 
+        {/* Product Category */}
         <div className="form-group">
-          <label className="form-label">Category <span style={{ color: 'red' }}>*</span></label>
-          <input
+          <label className="form-label">Product Category <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
+          <select
             className="form-input"
-            type="text"
             value={formState.category || ''}
             onChange={e => setFormState({ ...formState, category: e.target.value })}
-            placeholder="e.g. T-Shirts, Hoodies, Accessories"
             required
-          />
+            style={{ appearance: 'auto' }}
+          >
+            <option value="">Select Category</option>
+            <option value="Precision CNC Components">Precision CNC Components</option>
+            <option value="Casting & Metal Products">Casting &amp; Metal Products</option>
+            <option value="Automation & IoT Solutions">Automation &amp; IoT Solutions</option>
+            <option value="Valve Technology">Valve Technology</option>
+          </select>
         </div>
+
+        {/* Brand / Manufacturer */}
         <div className="form-group">
-          <label className="form-label">Brand</label>
+          <label className="form-label">Manufacturer / Brand</label>
           <input
             className="form-input"
             type="text"
             value={formState.brand || ''}
             onChange={e => setFormState({ ...formState, brand: e.target.value })}
-            placeholder="e.g. Nike, Adidas, Puma"
-          />
-        </div>
-        {/* Size Selection */}
-        <div className="form-group">
-          <label className="form-label">Available Sizes (comma separated) <span style={{ color: 'red' }}>*</span></label>
-          <input
-            type="text"
-            value={sizesInput}
-            onChange={handleSizesChange}
-            placeholder="e.g. S,M,L,XL"
-            className="form-input"
-            required
+            placeholder="e.g. Chassa Engineering, OEM"
           />
         </div>
 
+        {/* Technical Description */}
         <div className="form-group">
-          <label className="form-label">Description <span style={{ color: 'red' }}>*</span></label>
+          <label className="form-label">Technical Description <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
           <textarea
             className="form-textarea"
             value={formState.description || ''}
             onChange={e => setFormState({ ...formState, description: e.target.value })}
             rows="4"
+            placeholder="Describe specifications, tolerances, material grade, application..."
             required
           />
         </div>
-        {/* Material & Care Section */}
+
+        {/* Material */}
         <div className="form-group">
-          <label className="form-label">Material</label>
+          <label className="form-label">Material / Alloy</label>
           <input
             className="form-input"
             type="text"
-            value={formState.material || '100% Cotton'}
+            value={formState.material || ''}
             onChange={e => setFormState({ ...formState, material: e.target.value })}
-            placeholder="e.g. 100% Cotton, Polyester Blend"
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label">Care Instructions</label>
-          <input
-            className="form-input"
-            type="text"
-            value={formState.care || 'Machine Wash'}
-            onChange={e => setFormState({ ...formState, care: e.target.value })}
-            placeholder="e.g. Machine Wash, Hand Wash Only"
+            placeholder="e.g. Aluminum A360, Stainless Steel 304, Cast Iron"
           />
         </div>
 
-        {/* Product Image Upload - Front */}
+        {/* Component Image */}
         <div className="form-group">
-          <label className="form-label">Product Image (Front) <span style={{ color: 'red' }}>*</span></label>
+          <label className="form-label">Component Image (Primary) <span style={{ color: 'var(--ad-danger)' }}>*</span></label>
           <input
             type="file"
             accept="image/*"
@@ -290,16 +275,16 @@ const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submit
             <div style={{ marginTop: 8 }}>
               <img
                 src={frontImagePreview}
-                alt="Front Preview"
-                style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 4 }}
+                alt="Primary Preview"
+                style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 4, border: '1px solid var(--ad-border)' }}
               />
             </div>
           )}
         </div>
 
-        {/* Product Image Upload - Back */}
+        {/* Secondary Image */}
         <div className="form-group">
-          <label className="form-label">Product Image (Back) - Upload to Supabase</label>
+          <label className="form-label">Component Image (Secondary / Detail View)</label>
           <input
             type="file"
             accept="image/*"
@@ -310,27 +295,18 @@ const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submit
             <div style={{ marginTop: 8 }}>
               <img
                 src={backImagePreview}
-                alt="Back Preview"
-                style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 4 }}
+                alt="Secondary Preview"
+                style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 4, border: '1px solid var(--ad-border)' }}
               />
             </div>
           )}
         </div>
 
         <div className="modal-actions">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={uploading}
-          >
-            {uploading ? 'Uploading to Supabase...' : (submitText || 'Save')}
+          <button type="submit" className="btn btn-primary" disabled={uploading}>
+            {uploading ? 'Uploading...' : (submitText || 'Save')}
           </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={onClose}
-            disabled={uploading}
-          >
+          <button type="button" className="btn btn-secondary" onClick={onClose} disabled={uploading}>
             Cancel
           </button>
         </div>

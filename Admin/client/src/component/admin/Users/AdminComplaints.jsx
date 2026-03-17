@@ -32,8 +32,8 @@ const AdminComplaints = () => {
     <div className="page-wrap">
       <div className="page-header-bar">
         <div>
-          <h2 className="page-heading">User Complaints</h2>
-          <p className="page-heading-sub">{complaints.length} total complaints received</p>
+          <h2 className="page-heading">Support Tickets</h2>
+          <p className="page-heading-sub">{complaints.length} total support requests received</p>
         </div>
       </div>
 
@@ -42,9 +42,9 @@ const AdminComplaints = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th>User</th>
+                <th>Client</th>
                 <th>Email</th>
-                <th>Order #</th>
+                <th>Inquiry #</th>
                 <th>Subject</th>
                 <th>Message</th>
                 <th>Status</th>
@@ -53,12 +53,12 @@ const AdminComplaints = () => {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7"><div className="state-loading">Loading complaints...</div></td></tr>
+                <tr><td colSpan="7"><div className="state-loading">Loading support tickets...</div></td></tr>
               ) : complaints.length === 0 ? (
                 <tr><td colSpan="7">
                   <div className="state-empty">
                     <MessageCircleWarning size={40} />
-                    <p>No complaints found 🎉</p>
+                    <p>No support tickets — all clear! ✅</p>
                   </div>
                 </td></tr>
               ) : complaints.map(c => (

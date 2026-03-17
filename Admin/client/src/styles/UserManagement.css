@@ -1,26 +1,28 @@
 .user-management-container {
   padding: 24px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: #0A0E1A;
+  border-radius: 8px;
   width: 100%;
+  font-family: 'Barlow', sans-serif;
 }
 
 .user-management-title {
-  color: #1a202c;
-  font-size: 28px;
+  color: #E8EDF5;
+  font-size: 22px;
   font-weight: 700;
   margin: 0 0 24px 0;
   padding-bottom: 16px;
-  border-bottom: 2px solid #f7fafc;
+  border-bottom: 1px solid #1E2D42;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .user-table-container {
-  background: white;
-  border-radius: 12px;
+  background: #161D2E;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  border: 1px solid #1E2D42;
 }
 
 .user-table {
@@ -29,42 +31,51 @@
 }
 
 .user-table thead {
-  background: #f7fafc;
+  background: linear-gradient(135deg, #0D1A2E, #1E2D42);
+  border-bottom: 1px solid #00B0FF;
 }
 
 .user-table th {
-  padding: 16px;
+  padding: 13px 16px;
   text-align: left;
-  font-weight: 600;
-  color: #4a5568;
-  font-size: 12px;
+  font-weight: 700;
+  color: #00B0FF;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #e2e8f0;
+  letter-spacing: 0.12em;
+  border-bottom: none;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .user-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 13px 16px;
+  border-bottom: 1px solid #1E2D42;
   vertical-align: middle;
+  color: #9AAABB;
 }
 
 .user-table tbody tr:hover {
-  background: #f7fafc;
+  background: rgba(0,176,255,0.04);
 }
 
 .user-name {
-  font-weight: 600;
-  color: #1a202c;
+  font-weight: 700;
+  color: #E8EDF5;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.04em;
 }
 
 .user-email {
-  color: #4a5568;
+  color: #5C6E82;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
 }
 
 .user-role {
-  color: #667eea;
-  font-weight: 500;
+  color: #00B0FF;
+  font-weight: 600;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
 }
 
 .user-status-badge {
@@ -237,32 +248,37 @@
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
+  background: #161D2E;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #1E2D42;
 }
 
 .users-table th {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 16px 12px;
+  background: linear-gradient(135deg, #0D1A2E, #1E2D42);
+  border-bottom: 1px solid #00B0FF;
+  color: #00B0FF;
+  padding: 13px 12px;
   text-align: left;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: none;
+  letter-spacing: 0.12em;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .users-table td {
-  padding: 16px 12px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 13px 12px;
+  border-bottom: 1px solid #1E2D42;
   vertical-align: middle;
+  color: #9AAABB;
 }
 
 .users-table tbody tr:hover {
-  background-color: #f8fafc;
+  background-color: rgba(0,176,255,0.04);
 }
 
 .orders-count, .amount-spent, .pending-orders, .pending-payments {
@@ -281,22 +297,25 @@
 }
 
 .view-orders-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1565C0;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
+  border: 1px solid rgba(0,176,255,0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .view-orders-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  background: #00B0FF;
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(0,176,255,0.3);
 }
 
 /* Mobile Responsive */

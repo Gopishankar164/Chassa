@@ -1,35 +1,39 @@
 .system-settings-container {
   padding: 24px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: #0A0E1A;
+  border-radius: 8px;
   max-width: 600px;
+  font-family: 'Barlow', sans-serif;
 }
 
 .settings-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .settings-section {
   padding: 24px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #1E2D42;
   border-radius: 8px;
-  background: #f7fafc;
+  background: #161D2E;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
 .settings-section-title {
-  color: #1a202c;
-  font-size: 18px;
-  font-weight: 600;
+  color: #E8EDF5;
+  font-size: 13px;
+  font-weight: 700;
   margin: 0 0 16px 0;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1E2D42;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .settings-form-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .settings-form-group:last-child {
@@ -38,60 +42,70 @@
 
 .settings-label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #4a5568;
-  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: #00B0FF;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .settings-input {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+  padding: 10px 14px;
+  border: 1px solid #1E2D42;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: border-color 0.2s;
   box-sizing: border-box;
+  background: #0A0E1A;
+  color: #E8EDF5;
+  font-family: 'Barlow', sans-serif;
 }
 
 .settings-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #00B0FF;
+  box-shadow: 0 0 0 2px rgba(0,176,255,0.12);
 }
 
 .settings-textarea {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 10px 14px;
+  border: 1px solid #1E2D42;
+  border-radius: 6px;
+  font-size: 13px;
   resize: vertical;
   min-height: 100px;
   box-sizing: border-box;
+  background: #0A0E1A;
+  color: #E8EDF5;
+  font-family: 'Barlow', sans-serif;
 }
 
 .settings-textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #00B0FF;
+  box-shadow: 0 0 0 2px rgba(0,176,255,0.12);
 }
 
 .settings-select {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 16px;
-  background: white;
+  padding: 10px 14px;
+  border: 1px solid #1E2D42;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #0A0E1A;
+  color: #E8EDF5;
   cursor: pointer;
   box-sizing: border-box;
 }
 
 .settings-select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #00B0FF;
+  box-shadow: 0 0 0 2px rgba(0,176,255,0.12);
 }
 
 .settings-checkbox-group {
@@ -104,37 +118,46 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
+  accent-color: #00B0FF;
 }
 
 .settings-checkbox-label {
   cursor: pointer;
   font-weight: 500;
-  color: #4a5568;
+  color: #9AAABB;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
 }
 
 .settings-submit-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1565C0;
   color: white;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border: 1px solid rgba(0,176,255,0.3);
+  padding: 11px 28px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   align-self: flex-start;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .settings-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  background: #00B0FF;
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(0,176,255,0.3);
 }
 
 .settings-help-text {
-  font-size: 12px;
-  color: #718096;
+  font-size: 11px;
+  color: #5C6E82;
   margin-top: 4px;
-  font-style: italic;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
 }
 
 /* Mobile Responsive */

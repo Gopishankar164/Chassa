@@ -1,7 +1,8 @@
 .order-management-container {
   padding: 20px;
-  background-color: #f8fafc;
+  background-color: #0A0E1A;
   min-height: 100vh;
+  font-family: 'Barlow', sans-serif;
 }
 
 .order-management-header {
@@ -10,10 +11,11 @@
   align-items: center;
   margin-bottom: 30px;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
+  background: linear-gradient(135deg, #0D1A2E 0%, #1565C0 100%);
+  border-radius: 8px;
+  border-left: 4px solid #00B0FF;
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .order-management-title {
@@ -42,43 +44,43 @@
 }
 
 .orders-table-container {
-  background: white;
-  border-radius: 16px;
+  background: #161D2E;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  border: 1px solid #1E2D42;
 }
 
 .orders-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .orders-table thead {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  color: white;
+  background: linear-gradient(135deg, #0D1A2E 0%, #1E2D42 100%);
+  border-bottom: 1px solid #00B0FF;
 }
 
 .orders-table th {
-  padding: 18px 16px;
+  padding: 14px 16px;
   text-align: left;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
   border: none;
+  color: #00B0FF;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .orders-table tbody tr {
-  border-bottom: 1px solid #f1f5f9;
-  transition: all 0.2s ease;
+  border-bottom: 1px solid #1E2D42;
+  transition: background 0.2s ease;
 }
 
 .orders-table tbody tr:hover {
-  background-color: #f8fafc;
-  transform: scale(1.01);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: rgba(0,176,255,0.04);
 }
 
 .orders-table tbody tr:last-child {
@@ -86,46 +88,48 @@
 }
 
 .orders-table td {
-  padding: 16px;
+  padding: 13px 16px;
   vertical-align: middle;
   border: none;
+  color: #9AAABB;
 }
 
 /* Order ID styling */
 .order-id {
-  color: #4f46e5;
-  font-weight: 600;
+  color: #00B0FF;
+  font-weight: 700;
   text-decoration: none;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
   transition: color 0.2s ease;
 }
 
 .order-id:hover {
-  color: #7c3aed;
-  text-decoration: underline;
+  color: #40C4FF;
 }
 
-/* Customer name styling */
 .customer-name {
-  font-weight: 500;
-  color: #1e293b;
-}
-
-/* Products count styling */
-.products-count {
-  background: #e0e7ff;
-  color: #4338ca;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
   font-weight: 600;
-  display: inline-block;
+  color: #E8EDF5;
+  font-family: 'Rajdhani', sans-serif;
 }
 
-/* Total amount styling */
+.products-count {
+  background: rgba(0,176,255,0.1);
+  color: #00B0FF;
+  border: 1px solid rgba(0,176,255,0.2);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+}
+
 .total-amount {
   font-weight: 700;
-  color: #059669;
-  font-size: 16px;
+  color: #00C853;
+  font-size: 14px;
 }
 
 /* Payment method styling */
@@ -265,25 +269,30 @@
 .no-orders {
   text-align: center;
   padding: 60px 20px;
-  color: #64748b;
+  color: #5C6E82;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .no-orders h3 {
-  font-size: 24px;
+  font-size: 18px;
   margin-bottom: 12px;
-  color: #475569;
+  color: #9AAABB;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .no-orders p {
-  font-size: 16px;
+  font-size: 13px;
   margin-bottom: 0;
 }
 
-/* Loading state */
 .loading-orders {
   text-align: center;
   padding: 40px;
-  color: #64748b;
+  color: #5C6E82;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
 }
 
 /* Responsive design */

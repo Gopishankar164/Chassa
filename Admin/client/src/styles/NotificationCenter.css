@@ -1,33 +1,35 @@
+/* NotificationCenter.css — Chassa Engineering Drives */
 .notification-center-container {
   padding: 24px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: #0A0E1A;
+  border-radius: 8px;
+  font-family: 'Barlow', sans-serif;
 }
 
 .notification-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .notification-item {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  background: #161D2E;
+  border: 1px solid #1E2D42;
+  border-radius: 6px;
   padding: 16px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .notification-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border-color: rgba(0,176,255,0.3);
   transform: translateY(-1px);
 }
 
 .notification-item.unread {
-  border-left: 4px solid #667eea;
-  background: #f7fafc;
+  border-left: 3px solid #00B0FF;
+  background: rgba(0,176,255,0.04);
 }
 
 .notification-content {
@@ -43,45 +45,55 @@
 }
 
 .notification-icon {
-  font-size: 20px;
-  background: #f7fafc;
+  font-size: 18px;
+  background: rgba(0,176,255,0.08);
+  border: 1px solid rgba(0,176,255,0.15);
   padding: 8px;
-  border-radius: 50%;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  color: #00B0FF;
 }
 
 .notification-text {
-  color: #1a202c;
-  font-weight: 500;
-  font-size: 16px;
+  color: #E8EDF5;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.04em;
 }
 
 .notification-time {
-  color: #718096;
-  font-size: 14px;
+  color: #5C6E82;
+  font-size: 11px;
   font-weight: 400;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
 }
 
 /* Empty state */
 .notification-empty {
   text-align: center;
   padding: 60px 20px;
-  color: #718096;
+  color: #5C6E82;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
 }
 
 .notification-empty h3 {
-  color: #4a5568;
+  color: #9AAABB;
   margin: 0 0 12px 0;
-  font-size: 20px;
+  font-size: 16px;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .notification-empty p {
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 /* Mobile Responsive */

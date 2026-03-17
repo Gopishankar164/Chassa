@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&display=swap');
 
 .sidebar {
   position: fixed;
@@ -6,14 +6,15 @@
   top: 0;
   height: 100vh;
   width: 255px;
-  background: linear-gradient(180deg, #1e1b4b 0%, #312e81 60%, #1e1b4b 100%);
+  background: linear-gradient(180deg, #070B14 0%, #0D1A2E 50%, #070B14 100%);
   color: white;
   transition: width 0.3s cubic-bezier(.4, 0, .2, 1), transform 0.3s ease;
   z-index: 1000;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5);
+  border-right: 1px solid #1E2D42;
 }
 
 .sidebar.closed {
@@ -26,9 +27,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0,176,255,0.15);
   min-height: 72px;
   flex-shrink: 0;
+  background: rgba(0,176,255,0.03);
 }
 
 .sidebar-logo-container {
@@ -41,16 +43,15 @@
 .sidebar-logo-circle {
   width: 38px;
   height: 38px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #818cf8, #6366f1);
+  border-radius: 6px;
+  background: transparent;
+  border: 1.5px solid #00B0FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
-  color: white;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 12px rgba(0,176,255,0.3);
+  overflow: hidden;
 }
 
 .sidebar-brand {
@@ -60,19 +61,23 @@
 }
 
 .sidebar-brand-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  color: white;
+  color: #E8EDF5;
   white-space: nowrap;
-  letter-spacing: -0.2px;
+  letter-spacing: 0.12em;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .sidebar-brand-sub {
-  font-size: 10px;
-  color: rgba(165, 180, 252, 0.8);
+  font-size: 9px;
+  color: #00B0FF;
   font-weight: 500;
   white-space: nowrap;
-  margin-top: 1px;
+  margin-top: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
 }
 
 .sidebar-toggle-btn {
@@ -113,25 +118,30 @@
   align-items: center;
   gap: 12px;
   padding: 11px 12px;
-  border-radius: 10px;
-  color: rgba(199, 210, 254, 0.8);
+  border-radius: 6px;
+  color: #9AAABB;
   text-decoration: none;
   transition: all 0.2s ease;
   margin-bottom: 3px;
   white-space: nowrap;
   overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(0,176,255,0.08);
+  color: #00B0FF;
   transform: translateX(2px);
+  border-left: 2px solid #00B0FF;
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.8));
-  color: white;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  background: rgba(21,101,192,0.25);
+  color: #00B0FF;
+  border-left: 2px solid #00B0FF;
+  box-shadow: 0 0 12px rgba(0,176,255,0.15);
 }
 
 .nav-icon {
@@ -156,9 +166,11 @@
 }
 
 .sidebar-footer-text {
-  font-size: 11px;
-  color: rgba(165, 180, 252, 0.5);
+  font-size: 9px;
+  color: rgba(0,176,255,0.4);
   text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.15em;
 }
 
 /* ── Overlay ── */

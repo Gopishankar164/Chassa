@@ -61,8 +61,8 @@ const PaymentManagement = () => {
   };
 
   const summaryCards = [
-    { label: 'Total Revenue', value: formatCurrency(paymentSummary.totalRevenue), icon: <TrendingUp size={20} />, color: 'icon-indigo' },
-    { label: 'Pending Amount', value: formatCurrency(paymentSummary.pendingAmount), sub: `${paymentSummary.pendingPayments || 0} orders`, icon: <Clock size={20} />, color: 'icon-amber' },
+    { label: 'Total Business Value', value: formatCurrency(paymentSummary.totalRevenue), icon: <TrendingUp size={20} />, color: 'icon-indigo' },
+    { label: 'Pending Amount', value: formatCurrency(paymentSummary.pendingAmount), sub: `${paymentSummary.pendingPayments || 0} inquiries`, icon: <Clock size={20} />, color: 'icon-amber' },
     { label: 'Completed Payments', value: paymentSummary.completedPayments || 0, sub: 'orders paid', icon: <CheckCircle size={20} />, color: 'icon-green' },
   ];
 
@@ -78,7 +78,7 @@ const PaymentManagement = () => {
       <div className="page-header-bar">
         <div>
           <h2 className="page-heading">Payment Management</h2>
-          <p className="page-heading-sub">Manage and track all payment transactions</p>
+          <p className="page-heading-sub">Track and manage all client payment transactions</p>
         </div>
       </div>
 
@@ -111,20 +111,20 @@ const PaymentManagement = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Amount</th>
+                <th>Inquiry ID</th>
+                <th>Client</th>
+                <th>Value</th>
                 <th>Method</th>
                 <th>Payment Status</th>
-                <th>Order Date</th>
+                <th>Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="7"><div className="state-loading">Loading payments...</div></td></tr>
+                <tr><td colSpan="7"><div className="state-loading">Loading payment records...</div></td></tr>
               ) : orders.length === 0 ? (
-                <tr><td colSpan="7"><div className="state-empty"><p>No orders found</p></div></td></tr>
+                <tr><td colSpan="7"><div className="state-empty"><p>No payment records found</p></div></td></tr>
               ) : orders.map(order => (
                 <tr key={order.id}>
                   <td><span style={{ color: '#6366f1', fontWeight: 700 }}>#{order.id}</span></td>

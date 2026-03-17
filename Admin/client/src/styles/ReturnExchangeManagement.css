@@ -2,9 +2,9 @@
 
 .return-mgmt-container {
     padding: 30px;
-    background: #f1f5f9;
+    background: #0A0E1A;
     min-height: 100vh;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Barlow', sans-serif;
 }
 
 .mgmt-header {
@@ -15,34 +15,42 @@
 }
 
 .mgmt-header h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    color: #1e293b;
+    color: #E8EDF5;
     margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.08em;
 }
 
 .refresh-btn {
-    padding: 10px 20px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #475569;
-    font-weight: 500;
+    padding: 9px 18px;
+    background: #2A3A50;
+    border: 1px solid #1E2D42;
+    border-radius: 6px;
+    color: #9AAABB;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .refresh-btn:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: rgba(0,176,255,0.1);
+    border-color: rgba(0,176,255,0.3);
+    color: #00B0FF;
 }
 
 /* Table Design */
 .table-wrapper {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #161D2E;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid #1E2D42;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     overflow-x: auto;
 }
 
@@ -54,24 +62,27 @@
 
 .mgmt-table th {
     text-align: left;
-    padding: 16px;
-    border-bottom: 2px solid #f1f5f9;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 13px 16px;
+    border-bottom: 1px solid #00B0FF;
+    background: linear-gradient(135deg, #0D1A2E, #1E2D42);
+    color: #00B0FF;
+    font-size: 10px;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: 'Share Tech Mono', monospace;
 }
 
 .mgmt-table td {
-    padding: 16px;
-    border-bottom: 1px solid #f1f5f9;
-    color: #1e293b;
-    font-size: 14px;
+    padding: 13px 16px;
+    border-bottom: 1px solid #1E2D42;
+    color: #9AAABB;
+    font-size: 13px;
 }
 
 /* Row Hover */
 .mgmt-table tbody tr:hover {
-    background: #f8fafc;
+    background: rgba(0,176,255,0.04);
 }
 
 /* Status Tags & Pills */
@@ -83,41 +94,49 @@
 }
 
 .tag-return {
-    background: #fee2e2;
-    color: #991b1b;
+    background: rgba(255,23,68,0.1);
+    color: #FF1744;
+    border: 1px solid rgba(255,23,68,0.2);
 }
 
 .tag-exchange {
-    background: #e0f2fe;
-    color: #075985;
+    background: rgba(0,176,255,0.1);
+    color: #00B0FF;
+    border: 1px solid rgba(0,176,255,0.2);
 }
 
 .status-pill {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
 .pill-pending {
-    background: #fef3c7;
-    color: #92400e;
+    background: rgba(255,179,0,0.1);
+    color: #FFB300;
+    border: 1px solid rgba(255,179,0,0.2);
 }
 
 .pill-approved {
-    background: #dcfce7;
-    color: #166534;
+    background: rgba(0,200,83,0.1);
+    color: #00C853;
+    border: 1px solid rgba(0,200,83,0.2);
 }
 
 .pill-rejected {
-    background: #fee2e2;
-    color: #991b1b;
+    background: rgba(255,23,68,0.1);
+    color: #FF1744;
+    border: 1px solid rgba(255,23,68,0.2);
 }
 
 .pill-completed {
-    background: #f1f5f9;
-    color: #475569;
+    background: rgba(0,176,255,0.1);
+    color: #00B0FF;
+    border: 1px solid rgba(0,176,255,0.2);
 }
 
 /* Buttons */
@@ -137,17 +156,35 @@
 }
 
 .act-btn.approve {
-    background: #10b981;
-    color: white;
+    background: rgba(0,200,83,0.15);
+    color: #00C853;
+    border: 1px solid rgba(0,200,83,0.3);
+}
+
+.act-btn.approve:hover {
+    background: #00C853;
+    color: #000;
 }
 
 .act-btn.reject {
-    background: #ef4444;
+    background: rgba(255,23,68,0.1);
+    color: #FF1744;
+    border: 1px solid rgba(255,23,68,0.2);
+}
+
+.act-btn.reject:hover {
+    background: #FF1744;
     color: white;
 }
 
 .act-btn.complete {
-    background: #6366f1;
+    background: rgba(21,101,192,0.15);
+    color: #00B0FF;
+    border: 1px solid rgba(0,176,255,0.2);
+}
+
+.act-btn.complete:hover {
+    background: #1565C0;
     color: white;
 }
 
@@ -161,14 +198,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #64748b;
+    color: #5C6E82;
 }
 
 /* Error/Empty states */
 .admin-error {
-    background: #fef2f2;
-    color: #b91c1c;
+    background: rgba(255,23,68,0.08);
+    color: #FF1744;
+    border: 1px solid rgba(255,23,68,0.2);
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 6px;
     margin-bottom: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
 }

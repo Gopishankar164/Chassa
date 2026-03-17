@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;600;700&family=Share+Tech+Mono&display=swap');
 
 * {
-  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #f6f7fb;
+  background: #0A0E1A;
   overflow-x: hidden;
+  font-family: 'Barlow', sans-serif;
 }
 
 .admin-main {
@@ -26,7 +27,7 @@
 
 .admin-content {
   flex: 1;
-  background: #f6f7fb;
+  background: #0A0E1A;
   overflow-y: auto;
   min-height: calc(100vh - 68px);
 }

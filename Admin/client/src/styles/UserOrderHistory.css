@@ -1,7 +1,9 @@
 .user-order-history-container {
   padding: 24px;
-  background: #f8fafc;
+  background: var(--ad-bg, #0A0E1A);
   min-height: 100vh;
+  font-family: 'Barlow', sans-serif;
+  color: var(--ad-text, #E8EDF5);
 }
 
 /* Header */
@@ -603,14 +605,16 @@
 }
 
 .user-icon {
-  color: #667eea;
+  color: #00B0FF;
 }
 
 .user-details-header h3 {
   margin: 0;
-  color: #1e293b;
-  font-size: 18px;
-  font-weight: 600;
+  color: #E8EDF5;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .user-details-content {
@@ -624,26 +628,33 @@
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background: #f8fafc;
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
+  background: #0A0E1A;
+  border-radius: 6px;
+  border-left: 3px solid #00B0FF;
+  border-top: 1px solid #1E2D42;
+  border-right: 1px solid #1E2D42;
+  border-bottom: 1px solid #1E2D42;
 }
 
 .detail-row svg {
-  color: #667eea;
+  color: #00B0FF;
   flex-shrink: 0;
 }
 
 .detail-label {
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #5C6E82;
   min-width: 60px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
 }
 
 .detail-value {
-  color: #1e293b;
+  color: #E8EDF5;
   font-weight: 500;
   word-break: break-word;
+  font-size: 13px;
 }
 
 /* ✅ UPDATE HEADER STYLES */
@@ -657,28 +668,35 @@
 
 .page-title h2 {
   margin: 0;
-  color: #1e293b;
-  font-size: 24px;
+  color: #E8EDF5;
+  font-size: 20px;
   font-weight: 700;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .back-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  color: #475569;
-  padding: 10px 16px;
-  border-radius: 8px;
+  background: #2A3A50;
+  border: 1px solid #1E2D42;
+  color: #9AAABB;
+  padding: 9px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   transition: all 0.2s ease;
 }
 
 .back-button:hover {
-  background: #e2e8f0;
-  color: #334155;
+  background: rgba(0,176,255,0.1);
+  border-color: rgba(0,176,255,0.3);
+  color: #00B0FF;
 }
 
 /* ✅ RESPONSIVE DESIGN FOR USER DETAILS */

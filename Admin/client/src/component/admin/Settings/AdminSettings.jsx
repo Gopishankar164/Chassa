@@ -88,20 +88,29 @@ const AdminSettings = () => {
   };
 
   const inputStyle = {
-    width: '100%', padding: '10px 14px', border: '1.5px solid #e2e8f0', borderRadius: 8,
-    fontSize: 14, outline: 'none', background: '#f8fafc', boxSizing: 'border-box',
-    fontFamily: 'inherit', transition: 'border-color 0.2s',
+    width: '100%', padding: '10px 14px',
+    border: '1px solid #1E2D42', borderRadius: 6,
+    fontSize: 13, outline: 'none',
+    background: '#0A0E1A', color: '#E8EDF5',
+    boxSizing: 'border-box',
+    fontFamily: "'Barlow', sans-serif", transition: 'border-color 0.2s',
   };
 
-  const labelStyle = { display: 'block', fontSize: 12, fontWeight: 700, color: '#64748b', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' };
+  const labelStyle = {
+    display: 'block', fontSize: 10, fontWeight: 700,
+    color: '#00B0FF', marginBottom: 6,
+    textTransform: 'uppercase', letterSpacing: '0.15em',
+    fontFamily: "'Share Tech Mono', monospace"
+  };
 
   const Alert = ({ data }) => data ? (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px',
-      borderRadius: 10, marginBottom: 20, fontSize: 14, fontWeight: 500,
-      background: data.type === 'success' ? '#f0fdf4' : '#fef2f2',
-      border: `1px solid ${data.type === 'success' ? '#86efac' : '#fca5a5'}`,
-      color: data.type === 'success' ? '#15803d' : '#b91c1c',
+      borderRadius: 6, marginBottom: 20, fontSize: 13, fontWeight: 500,
+      background: data.type === 'success' ? 'rgba(0,200,83,0.08)' : 'rgba(255,23,68,0.08)',
+      border: `1px solid ${data.type === 'success' ? 'rgba(0,200,83,0.25)' : 'rgba(255,23,68,0.25)'}`,
+      color: data.type === 'success' ? '#00C853' : '#FF1744',
+      fontFamily: "'Share Tech Mono', monospace",
     }}>
       {data.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
       {data.msg}
@@ -128,16 +137,24 @@ const AdminSettings = () => {
   );
 
   const cardStyle = {
-    background: '#fff', border: '1.5px solid #e2e8f0', borderRadius: 16,
-    padding: '28px 32px', marginBottom: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
+    background: '#161D2E',
+    border: '1px solid #1E2D42',
+    borderRadius: 8,
+    padding: '28px 32px', marginBottom: 24,
+    boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
   };
 
-  const submitBtn = (loading, label) => ({
-    background: loading ? '#94a3b8' : '#6366f1',
-    color: '#fff', border: 'none', borderRadius: 8, padding: '11px 28px',
-    fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+  const submitBtn = (loading) => ({
+    background: loading ? '#2A3A50' : '#1565C0',
+    color: loading ? '#5C6E82' : '#fff',
+    border: '1px solid rgba(0,176,255,0.3)',
+    borderRadius: 6, padding: '11px 28px',
+    fontSize: 12, fontWeight: 700,
+    cursor: loading ? 'not-allowed' : 'pointer',
     display: 'flex', alignItems: 'center', gap: 8, marginTop: 8,
-    transition: 'background 0.2s',
+    transition: 'all 0.2s',
+    fontFamily: "'Rajdhani', sans-serif",
+    letterSpacing: '0.1em', textTransform: 'uppercase',
   });
 
   return (
@@ -151,15 +168,15 @@ const AdminSettings = () => {
       </div>
 
       {/* Current Account Info */}
-      <div style={{ ...cardStyle, background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', color: '#fff', marginBottom: 28 }}>
+      <div style={{ ...cardStyle, background: 'linear-gradient(135deg, #0D1A2E 0%, #1565C0 100%)', borderLeft: '3px solid #00B0FF', marginBottom: 28 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, fontWeight: 800 }}>
+          <div style={{ width: 48, height: 48, borderRadius: 6, background: 'rgba(0,176,255,0.15)', border: '1px solid rgba(0,176,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 800, fontFamily: "'Rajdhani', sans-serif", color: '#00B0FF' }}>
             {adminName.charAt(0).toUpperCase()}
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 18 }}>{adminName}</div>
-            <div style={{ opacity: 0.8, fontSize: 13, marginTop: 2 }}>{adminEmail}</div>
-            <div style={{ opacity: 0.65, fontSize: 11, marginTop: 2 }}>🛡️ Administrator</div>
+            <div style={{ fontWeight: 700, fontSize: 16, fontFamily: "'Rajdhani', sans-serif", letterSpacing: '0.1em', color: '#E8EDF5' }}>{adminName}</div>
+            <div style={{ fontSize: 12, marginTop: 2, color: '#00B0FF', fontFamily: "'Share Tech Mono', monospace" }}>{adminEmail}</div>
+            <div style={{ fontSize: 10, marginTop: 3, color: '#5C6E82', fontFamily: "'Share Tech Mono', monospace", letterSpacing: '0.1em' }}>⚙ CHASSA ENGINEERING DRIVES — ADMINISTRATOR</div>
           </div>
         </div>
       </div>
@@ -167,12 +184,12 @@ const AdminSettings = () => {
       {/* Change Email */}
       <div style={cardStyle}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Mail size={18} color="#3b82f6" />
+          <div style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(0,176,255,0.1)', border: '1px solid rgba(0,176,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Mail size={18} color="#00B0FF" />
           </div>
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', margin: 0 }}>Change Email</h3>
-            <p style={{ fontSize: 12, color: '#94a3b8', margin: 0 }}>Update your admin login email</p>
+            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#E8EDF5', margin: 0, fontFamily: "'Rajdhani', sans-serif", letterSpacing: '0.08em' }}>Change Email</h3>
+            <p style={{ fontSize: 11, color: '#5C6E82', margin: 0, fontFamily: "'Share Tech Mono', monospace" }}>Update your admin login email</p>
           </div>
         </div>
 
@@ -206,12 +223,12 @@ const AdminSettings = () => {
       {/* Change Password */}
       <div style={cardStyle}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: '#fdf4ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Lock size={18} color="#a855f7" />
+          <div style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(0,176,255,0.1)', border: '1px solid rgba(0,176,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Lock size={18} color="#00B0FF" />
           </div>
           <div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', margin: 0 }}>Change Password</h3>
-            <p style={{ fontSize: 12, color: '#94a3b8', margin: 0 }}>Use a strong password (min. 6 characters)</p>
+            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#E8EDF5', margin: 0, fontFamily: "'Rajdhani', sans-serif", letterSpacing: '0.08em' }}>Change Password</h3>
+            <p style={{ fontSize: 11, color: '#5C6E82', margin: 0, fontFamily: "'Share Tech Mono', monospace" }}>Use a strong password (min. 6 characters)</p>
           </div>
         </div>
 
@@ -235,8 +252,8 @@ const AdminSettings = () => {
         </form>
       </div>
 
-      <p style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', marginTop: 8 }}>
-        After changing your credentials, you will be logged out automatically.
+      <p style={{ fontSize: 10, color: '#5C6E82', textAlign: 'center', marginTop: 8, fontFamily: "'Share Tech Mono', monospace", letterSpacing: '0.08em' }}>
+        // AFTER CHANGING CREDENTIALS, YOU WILL BE LOGGED OUT AUTOMATICALLY
       </p>
     </div>
   );

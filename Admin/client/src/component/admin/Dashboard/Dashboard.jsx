@@ -159,10 +159,10 @@ const Dashboard = () => {
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const statCards = [
-    { title: 'Total Revenue', value: formatCurrency(stats.revenue), icon: <TrendingUp size={22} />, color: 'indigo', sub: 'All time earnings' },
-    { title: 'Total Orders', value: stats.orders || 0, icon: <ShoppingCart size={22} />, color: 'emerald', sub: 'Lifetime orders' },
-    { title: 'Total Users', value: stats.users || 0, icon: <Users size={22} />, color: 'violet', sub: 'Registered customers' },
-    { title: 'Products Listed', value: stats.products || 0, icon: <Package size={22} />, color: 'amber', sub: 'Active catalogue' },
+    { title: 'Business Value', value: formatCurrency(stats.revenue), icon: <TrendingUp size={22} />, color: 'indigo', sub: 'Total revenue generated' },
+    { title: 'Projects / Orders', value: stats.orders || 0, icon: <ShoppingCart size={22} />, color: 'emerald', sub: 'Client inquiries & orders' },
+    { title: 'Clients', value: stats.users || 0, icon: <Users size={22} />, color: 'violet', sub: 'Registered clients' },
+    { title: 'Components Listed', value: stats.products || 0, icon: <Package size={22} />, color: 'amber', sub: 'Active product catalogue' },
   ];
 
   const getStatusClass = (status) => {
@@ -226,7 +226,7 @@ const Dashboard = () => {
         <div className="chart-card chart-lg">
           <div className="chart-header">
             <div>
-              <h3 className="chart-title">Weekly Revenue Trend</h3>
+              <h3 className="chart-title">Weekly Business Value Trend</h3>
               <p className="chart-sub">
                 Revenue from real orders · Last 7 days&nbsp;
                 {!loading && totalRevenueThisWeek > 0 && (
@@ -269,8 +269,8 @@ const Dashboard = () => {
         <div className="chart-card chart-sm">
           <div className="chart-header">
             <div>
-              <h3 className="chart-title">Order Status</h3>
-              <p className="chart-sub">Live distribution from all orders</p>
+              <h3 className="chart-title">Inquiry Status</h3>
+              <p className="chart-sub">Live distribution from all client inquiries</p>
             </div>
           </div>
           {loading ? (
@@ -320,7 +320,7 @@ const Dashboard = () => {
           <div className="panel-header">
             <div className="panel-title-row">
               <ShoppingCart size={18} className="panel-icon" />
-              <h3 className="panel-title">Recent Orders</h3>
+              <h3 className="panel-title">Recent Inquiries</h3>
               {!loading && <span className="panel-count-badge">{recentOrders.length} shown</span>}
             </div>
             <a href="/admin/orders" className="panel-link">View All →</a>
@@ -339,10 +339,10 @@ const Dashboard = () => {
               <table className="mini-table">
                 <thead>
                   <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
+                    <th>Inquiry ID</th>
+                    <th>Client</th>
                     <th>Items</th>
-                    <th>Amount</th>
+                    <th>Value</th>
                     <th>Status</th>
                     <th>Date</th>
                   </tr>
@@ -386,7 +386,7 @@ const Dashboard = () => {
           <div className="panel-header">
             <div className="panel-title-row">
               <AlertTriangle size={18} className="panel-icon panel-icon-warn" />
-              <h3 className="panel-title">Low Stock Alert</h3>
+              <h3 className="panel-title">Low Availability Alert</h3>
               {!loading && lowStockProducts.length > 0 && (
                 <span className="panel-warn-badge">{lowStockProducts.length}</span>
               )}
@@ -401,7 +401,7 @@ const Dashboard = () => {
           ) : lowStockProducts.length === 0 ? (
             <div className="panel-empty stock-ok">
               <div style={{ fontSize: 28, marginBottom: 6 }}>✅</div>
-              All products well stocked!
+              All components well stocked!
             </div>
           ) : (
             <div className="stock-list">
@@ -429,19 +429,19 @@ const Dashboard = () => {
         <h3 className="quick-title">Quick Actions</h3>
         <div className="quick-actions-grid">
           <a href="/admin/products" className="quick-btn quick-indigo">
-            <Plus size={20} /><span>Add Product</span>
+            <Plus size={20} /><span>Add Component</span>
           </a>
           <a href="/admin/orders" className="quick-btn quick-emerald">
-            <Eye size={20} /><span>View Orders</span>
+            <Eye size={20} /><span>View Inquiries</span>
           </a>
           <a href="/admin/users" className="quick-btn quick-violet">
-            <Users size={20} /><span>Manage Users</span>
+            <Users size={20} /><span>Manage Clients</span>
           </a>
           <a href="/admin/payments" className="quick-btn quick-rose">
             <CreditCard size={20} /><span>Payments</span>
           </a>
           <a href="/admin/complaints" className="quick-btn quick-slate">
-            <AlertTriangle size={20} /><span>Complaints</span>
+            <AlertTriangle size={20} /><span>Support Tickets</span>
           </a>
         </div>
       </div>

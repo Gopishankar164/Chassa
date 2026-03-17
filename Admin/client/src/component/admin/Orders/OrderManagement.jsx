@@ -321,8 +321,8 @@ const OrderManagement = () => {
     <div className="page-wrap">
       <div className="page-header-bar">
         <div>
-          <h2 className="page-heading">Order Management</h2>
-          <p className="page-heading-sub">{orders.length} total orders</p>
+          <h2 className="page-heading">Client Inquiries</h2>
+          <p className="page-heading-sub">{orders.length} total inquiries &amp; orders</p>
         </div>
         <button className="btn-secondary" onClick={fetchOrders}>
           <RefreshCw size={14} /> Refresh
@@ -330,7 +330,7 @@ const OrderManagement = () => {
       </div>
 
       <div className="notice-bar">
-        ✉️ <strong>Email notifications are enabled</strong> — customers are notified on every status update.
+        ✉️ <strong>Email notifications are enabled</strong> — clients are notified on every inquiry status update.
       </div>
 
       <div className="data-card">
@@ -338,14 +338,14 @@ const OrderManagement = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
+                <th>Inquiry ID</th>
+                <th>Client</th>
                 <th>Image</th>
                 <th>Items</th>
-                <th>Total</th>
+                <th>Value</th>
                 <th>Method</th>
                 <th>Payment</th>
-                <th>Order Status</th>
+                <th>Inquiry Status</th>
                 <th>Date</th>
                 <th>Track</th>
               </tr>
@@ -362,7 +362,7 @@ const OrderManagement = () => {
                 </td></tr>
               ) : orders.length === 0 ? (
                 <tr><td colSpan="10">
-                  <div className="state-empty"><ShoppingCart size={40} /><p>No orders found</p></div>
+                  <div className="state-empty"><ShoppingCart size={40} /><p>No inquiries found</p></div>
                 </td></tr>
               ) : orders.map(order => {
                 const items = order.items || order.orderItems || [];
@@ -408,12 +408,12 @@ const OrderManagement = () => {
                       <select className="status-select" value={order.status || 'CONFIRMED'}
                         onChange={e => handleOrderStatusChange(order.id, e.target.value)}
                         disabled={order.status === 'DELIVERED' || order.status === 'CANCELLED'}>
-                        <option value="PENDING">Pending</option>
+                        <option value="PENDING">Awaiting Response</option>
                         <option value="CONFIRMED">Confirmed</option>
-                        <option value="PROCESSING">Processing</option>
-                        <option value="SHIPPED">Shipped</option>
+                        <option value="PROCESSING">In Production</option>
+                        <option value="SHIPPED">Dispatched</option>
                         <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
-                        <option value="DELIVERED">Delivered</option>
+                        <option value="DELIVERED">Completed</option>
                         <option value="CANCELLED">Cancelled</option>
                       </select>
                     </td>
@@ -426,11 +426,11 @@ const OrderManagement = () => {
                           onClick={() => openDeliveryMap(order)}
                           style={{
                             display: 'flex', alignItems: 'center', gap: 5,
-                            background: 'linear-gradient(135deg,#8B1A1A,#5C0E0E)',
-                            color: 'white', border: 'none', borderRadius: 8,
+                            background: 'linear-gradient(135deg,#1565C0,#0D47A1)',
+                            color: 'white', border: '1px solid rgba(0,176,255,0.3)', borderRadius: 8,
                             padding: '7px 13px', cursor: 'pointer', fontSize: 12,
                             fontWeight: 700, whiteSpace: 'nowrap',
-                            boxShadow: '0 2px 8px rgba(139,26,26,0.35)'
+                            boxShadow: '0 2px 8px rgba(21,101,192,0.4)'
                           }}
                         >
                           <MapPin size={13} /> Deliver

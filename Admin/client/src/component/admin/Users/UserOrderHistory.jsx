@@ -82,7 +82,7 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
   if (loading) {
     return (
       <div className="user-order-history-container">
-        <div className="loading">Loading orders...</div>
+        <div className="loading">Loading order history...</div>
       </div>
     );
   }
@@ -93,7 +93,7 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
         <div className="error">Error: {error}</div>
         <button onClick={onBack} className="back-button">
           <ArrowLeft size={20} />
-          Back to Users
+          Back to Clients
         </button>
       </div>
     );
@@ -105,10 +105,10 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
       <div className="header">
         <button onClick={onBack} className="back-button">
           <ArrowLeft size={20} />
-          Back to Users
+          Back to Clients
         </button>
         <div className="page-title">
-          <h2>Order Management</h2>
+          <h2>Client Order History</h2>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
         <div className="user-details-card">
           <div className="user-details-header">
             <User className="user-icon" />
-            <h3>Customer Information</h3>
+            <h3>Client Information</h3>
           </div>
           <div className="user-details-content">
             <div className="detail-row">
@@ -148,14 +148,14 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
         <div className="summary-card">
           <Package className="card-icon" />
           <div className="card-content">
-            <h3>TOTAL ORDERS</h3>
+            <h3>TOTAL INQUIRIES</h3>
             <p className="card-value">{totalOrders}</p>
           </div>
         </div>
         <div className="summary-card">
           <CreditCard className="card-icon" />
           <div className="card-content">
-            <h3>TOTAL SPENT</h3>
+            <h3>TOTAL VALUE</h3>
             <p className="card-value">₹{totalAmount.toFixed(2)}</p>
           </div>
         </div>
@@ -163,26 +163,26 @@ const UserOrderHistory = ({ userEmail, userName, onBack }) => {
 
       {/* Orders Table */}
       <div className="orders-section">
-        <h3>Order History & Management</h3>
+        <h3>Inquiry &amp; Order History</h3>
 
         {orders.length === 0 ? (
           <div className="no-orders">
             <Package size={48} />
-            <p>No orders found</p>
+            <p>No orders found for this client</p>
           </div>
         ) : (
           <div className="orders-table-container">
             <table className="orders-table">
               <thead>
                 <tr>
-                  <th>ORDER #</th>
-                  <th>DATE</th>
-                  <th>ITEMS</th>
-                  <th>AMOUNT</th>
-                  <th>ORDER STATUS</th>
-                  <th>PAYMENT STATUS</th>
-                  <th>PAYMENT METHOD</th>
-                  <th>ACTIONS</th>
+                <th>INQUIRY #</th>
+                <th>DATE</th>
+                <th>ITEMS</th>
+                <th>VALUE</th>
+                <th>INQUIRY STATUS</th>
+                <th>PAYMENT STATUS</th>
+                <th>PAYMENT METHOD</th>
+                <th>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>

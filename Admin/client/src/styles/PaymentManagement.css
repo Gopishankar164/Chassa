@@ -1,7 +1,8 @@
 .payment-management-container {
   padding: 24px;
-  background: #f8fafc;
+  background: #0A0E1A;
   min-height: 100vh;
+  font-family: 'Barlow', sans-serif;
 }
 
 .payment-header {
@@ -16,53 +17,58 @@
 }
 
 .summary-card {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: #161D2E;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border: 1px solid #1E2D42;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 4px solid transparent;
-  transition: transform 0.2s ease;
+  border-left: 3px solid transparent;
+  transition: transform 0.2s ease, border-color 0.2s;
 }
 
 .summary-card:hover {
   transform: translateY(-2px);
+  border-color: #00B0FF;
 }
 
 .summary-card.total-revenue {
-  border-left-color: #48bb78;
+  border-left-color: #00C853;
 }
 
 .summary-card.pending-payments {
-  border-left-color: #ed8936;
+  border-left-color: #FFB300;
 }
 
 .summary-card.completed-payments {
-  border-left-color: #667eea;
+  border-left-color: #00B0FF;
 }
 
 .card-content h3 {
-  margin: 0 0 8px 0;
-  color: #4a5568;
-  font-size: 14px;
-  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #00B0FF;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .card-content .amount {
   margin: 0;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  color: #1a202c;
+  color: #E8EDF5;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .card-content .count {
-  color: #718096;
-  font-size: 14px;
+  color: #5C6E82;
+  font-size: 12px;
   font-weight: 500;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .card-icon {
@@ -79,33 +85,39 @@
 }
 
 .filter-btn {
-  padding: 10px 20px;
-  border: 2px solid #e2e8f0;
-  background: white;
-  border-radius: 8px;
+  padding: 8px 18px;
+  border: 1px solid #1E2D42;
+  background: #161D2E;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.2s ease;
-  color: #4a5568;
+  color: #9AAABB;
+  font-size: 12px;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .filter-btn:hover {
-  border-color: #cbd5e0;
-  background: #f7fafc;
+  border-color: #00B0FF;
+  color: #00B0FF;
 }
 
 .filter-btn.active {
-  background: #667eea;
+  background: #1565C0;
   color: white;
-  border-color: #667eea;
+  border-color: rgba(0,176,255,0.3);
+  box-shadow: 0 0 12px rgba(21,101,192,0.3);
 }
 
 /* Payment Table */
 .payment-table-container {
-  background: white;
-  border-radius: 12px;
+  background: #161D2E;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  border: 1px solid #1E2D42;
 }
 
 .payment-table {
@@ -114,50 +126,58 @@
 }
 
 .payment-table thead {
-  background: #f7fafc;
+  background: linear-gradient(135deg, #0D1A2E, #1E2D42);
+  border-bottom: 1px solid #00B0FF;
 }
 
 .payment-table th {
-  padding: 16px;
+  padding: 13px 16px;
   text-align: left;
-  font-weight: 600;
-  color: #4a5568;
-  font-size: 12px;
+  font-weight: 700;
+  color: #00B0FF;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #e2e8f0;
+  letter-spacing: 0.12em;
+  border-bottom: none;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .payment-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 13px 16px;
+  border-bottom: 1px solid #1E2D42;
   vertical-align: middle;
+  color: #9AAABB;
 }
 
 .payment-table tbody tr:hover {
-  background: #f7fafc;
+  background: rgba(0,176,255,0.04);
 }
 
 .order-id {
-  font-weight: 600;
-  color: #667eea;
+  font-weight: 700;
+  color: #00B0FF;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
 }
 
 .customer-info .customer-name {
-  font-weight: 600;
-  color: #1a202c;
-  margin-bottom: 4px;
+  font-weight: 700;
+  color: #E8EDF5;
+  margin-bottom: 3px;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.04em;
 }
 
 .customer-info .customer-email {
-  font-size: 12px;
-  color: #718096;
+  font-size: 11px;
+  color: #5C6E82;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .order-amount {
-  font-weight: 600;
-  color: #1a202c;
-  font-size: 16px;
+  font-weight: 700;
+  color: #00C853;
+  font-size: 14px;
 }
 
 .method-badge {
@@ -252,16 +272,20 @@
 
 .no-data {
   text-align: center;
-  color: #718096;
-  font-style: italic;
+  color: #5C6E82;
   padding: 40px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
 }
 
 .loading {
   text-align: center;
   padding: 40px;
-  color: #4a5568;
-  font-size: 18px;
+  color: #5C6E82;
+  font-size: 13px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.08em;
 }
 
 /* Mobile Responsive */

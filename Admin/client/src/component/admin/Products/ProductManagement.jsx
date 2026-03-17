@@ -103,11 +103,11 @@ const ProductManagement = () => {
       {/* Header */}
       <div className="page-header-bar">
         <div>
-          <h2 className="page-heading">Product Management</h2>
-          <p className="page-heading-sub">{products.length} products in catalogue</p>
+          <h2 className="page-heading">Engineering Products</h2>
+          <p className="page-heading-sub">{products.length} components in catalogue</p>
         </div>
         <button className="btn-primary" onClick={() => setShowAddProduct(true)}>
-          <Plus size={15} /> Add Product
+          <Plus size={15} /> Add Component
         </button>
       </div>
 
@@ -117,10 +117,10 @@ const ProductManagement = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Category</th>
+                <th>Component</th>
+                <th>Quote / Price</th>
+                <th>Availability</th>
+                <th>Eng. Category</th>
                 <th>Discount</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -129,7 +129,7 @@ const ProductManagement = () => {
             <tbody>
               {products.length === 0 ? (
                 <tr><td colSpan="7">
-                  <div className="state-empty"><Package size={40} /><p>No products found</p></div>
+                  <div className="state-empty"><Package size={40} /><p>No components found</p></div>
                 </td></tr>
               ) : products.map(product => (
                 <tr key={product.id}>
@@ -202,14 +202,14 @@ const ProductManagement = () => {
       </div>
 
       <Modal isOpen={showAddProduct} onClose={() => setShowAddProduct(false)}>
-        <ProductForm formState={newProduct} setFormState={setNewProduct}
-          onSubmit={handleAddProduct} onClose={() => setShowAddProduct(false)}
-          title="Add New Product" submitText="Add Product" />
+      <ProductForm formState={newProduct} setFormState={setNewProduct}
+      onSubmit={handleAddProduct} onClose={() => setShowAddProduct(false)}
+      title="Add New Component" submitText="Add Component" />
       </Modal>
       <Modal isOpen={!!editingProduct} onClose={() => setEditingProduct(null)}>
-        <ProductForm formState={editingProduct} setFormState={setEditingProduct}
-          onSubmit={handleUpdateProduct} onClose={() => setEditingProduct(null)}
-          title="Edit Product" submitText="Update Product" />
+      <ProductForm formState={editingProduct} setFormState={setEditingProduct}
+      onSubmit={handleUpdateProduct} onClose={() => setEditingProduct(null)}
+      title="Edit Component" submitText="Update Component" />
       </Modal>
     </div>
   );

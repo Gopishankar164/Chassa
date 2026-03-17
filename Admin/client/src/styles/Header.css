@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 .admin-header {
-  background: white;
+  background: rgba(10,14,26,0.97);
+  backdrop-filter: blur(12px);
   padding: 0 28px;
-  border-bottom: 1px solid #f0f0f5;
+  border-bottom: 1px solid #1E2D42;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +12,7 @@
   top: 0;
   z-index: 100;
   height: 68px;
-  box-shadow: 0 1px 12px rgba(0, 0, 0, .06);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
 }
 
 /* Left */
@@ -22,12 +23,12 @@
 }
 
 .menu-toggle {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #475569;
+  background: #2A3A50;
+  border: 1px solid #1E2D42;
+  color: #9AAABB;
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -37,9 +38,9 @@
 }
 
 .menu-toggle:hover {
-  background: #eef2ff;
-  color: #4f46e5;
-  border-color: #c7d2fe;
+  background: rgba(0,176,255,0.1);
+  color: #00B0FF;
+  border-color: rgba(0,176,255,0.3);
 }
 
 .header-page-info {
@@ -52,14 +53,18 @@
   margin: 0;
   font-size: 17px;
   font-weight: 700;
-  color: #1e293b;
-  letter-spacing: -0.3px;
+  color: #E8EDF5;
+  letter-spacing: 0.08em;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .header-breadcrumb {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 10px;
+  color: #00B0FF;
   font-weight: 500;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
 }
 
 /* Right */
@@ -70,12 +75,12 @@
 }
 
 .header-icon-btn {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
+  background: #2A3A50;
+  border: 1px solid #1E2D42;
+  color: #9AAABB;
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -85,9 +90,9 @@
 }
 
 .header-icon-btn:hover {
-  background: #eef2ff;
-  color: #4f46e5;
-  border-color: #c7d2fe;
+  background: rgba(0,176,255,0.1);
+  color: #00B0FF;
+  border-color: rgba(0,176,255,0.3);
 }
 
 .notif-dot {
@@ -106,23 +111,24 @@
   align-items: center;
   gap: 10px;
   padding: 6px 12px 6px 6px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid #1E2D42;
+  background: #2A3A50;
   transition: all 0.2s;
 }
 
 .header-profile:hover {
-  background: #eef2ff;
-  border-color: #c7d2fe;
+  background: rgba(0,176,255,0.08);
+  border-color: rgba(0,176,255,0.3);
 }
 
 .header-avatar {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: 4px;
+  background: linear-gradient(135deg, #1565C0, #1976D2);
+  border: 1px solid rgba(0,176,255,0.4);
   color: white;
   font-size: 12px;
   font-weight: 700;
@@ -130,6 +136,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .header-user-info {
@@ -140,39 +147,46 @@
 
 .header-name {
   font-size: 13px;
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: #E8EDF5;
   white-space: nowrap;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.04em;
 }
 
 .header-email {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 10px;
+  color: #00B0FF;
   white-space: nowrap;
+  font-family: 'Share Tech Mono', monospace;
+  opacity: 0.7;
 }
 
 .logout-btn {
   display: flex;
   align-items: center;
   gap: 7px;
-  background: #fff1f2;
-  color: #e11d48;
-  border: 1px solid #fecdd3;
+  background: rgba(255,23,68,0.08);
+  color: #FF4D6D;
+  border: 1px solid rgba(255,23,68,0.2);
   padding: 9px 16px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   transition: all 0.2s ease;
   white-space: nowrap;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .logout-btn:hover {
-  background: #e11d48;
+  background: #FF1744;
   color: white;
-  border-color: #e11d48;
+  border-color: #FF1744;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+  box-shadow: 0 0 16px rgba(255,23,68,0.3);
 }
 
 @media (max-width: 640px) {

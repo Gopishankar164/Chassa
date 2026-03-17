@@ -4,14 +4,14 @@ import { LogOut, Menu } from 'lucide-react';
 import '../styles/Header.css';
 
 const pageTitles = {
-  '/admin/dashboard': 'Dashboard',
-  '/admin/products': 'Product Management',
-  '/admin/orders': 'Order Management',
-  '/admin/return-exchange': 'Return & Exchange',
-  '/admin/users': 'User Management',
+  '/admin/dashboard': 'Operations Dashboard',
+  '/admin/products': 'Engineering Products',
+  '/admin/orders': 'Client Inquiries',
+  '/admin/return-exchange': 'Returns & Exchange',
+  '/admin/users': 'Client Management',
   '/admin/payments': 'Payment Management',
-  '/admin/complaints': 'Complaints',
-  '/admin/settings': 'Settings',
+  '/admin/complaints': 'Support Tickets',
+  '/admin/settings': 'Admin Settings',
 };
 
 const Header = ({ onLogout, toggleSidebar }) => {
@@ -31,7 +31,7 @@ const Header = ({ onLogout, toggleSidebar }) => {
         </button>
         <div className="header-page-info">
           <h1 className="header-page-title">{pageTitle}</h1>
-          <span className="header-breadcrumb">Aaradhana Admin</span>
+          <span className="header-breadcrumb">Chassa Engineering Drives · Admin</span>
         </div>
       </div>
 

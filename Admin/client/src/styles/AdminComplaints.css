@@ -1,8 +1,8 @@
-/* AdminComplaints.css */
+/* AdminComplaints.css — Chassa Engineering Drives */
 
 .admin-complaints-container {
   padding: 2rem;
-  background: #f8f9fa;
+  background: var(--ad-bg, #0A0E1A);
   min-height: 100vh;
 }
 
@@ -12,49 +12,55 @@
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 1px solid #1E2D42;
 }
 
 .admin-complaints-title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #E8EDF5;
   margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.08em;
 }
 
 .complaints-table-wrapper {
-  background: white;
+  background: #161D2E;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #1E2D42;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   overflow: hidden;
 }
 
 .admin-complaints-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 .admin-complaints-table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #0D1A2E 0%, #1E2D42 100%);
+  border-bottom: 1px solid #00B0FF;
 }
 
 .admin-complaints-table th {
-  padding: 1rem;
+  padding: 14px 16px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
   border: none;
+  color: #00B0FF;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .admin-complaints-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #e8e8e8;
-  color: #333;
+  padding: 13px 16px;
+  border-bottom: 1px solid #1E2D42;
+  color: #9AAABB;
   vertical-align: middle;
+  font-family: 'Barlow', sans-serif;
 }
 
 .admin-complaints-table tbody tr {
@@ -62,7 +68,7 @@
 }
 
 .admin-complaints-table tbody tr:hover {
-  background-color: #f5f7fa;
+  background-color: rgba(0,176,255,0.04);
 }
 
 .admin-complaints-table tbody tr:last-child td {
@@ -80,41 +86,46 @@
 }
 
 .status-open {
-  background: #fff3cd;
-  color: #856404;
+  background: rgba(255,23,68,0.1);
+  color: #FF1744;
+  border: 1px solid rgba(255,23,68,0.2);
 }
 
 .status-closed {
-  background: #d4edda;
-  color: #155724;
+  background: rgba(0,200,83,0.1);
+  color: #00C853;
+  border: 1px solid rgba(0,200,83,0.2);
 }
 
 .status-pending {
-  background: #cce5ff;
-  color: #004085;
+  background: rgba(255,179,0,0.1);
+  color: #FFB300;
+  border: 1px solid rgba(255,179,0,0.2);
 }
 
 /* Column Specific Styling */
 .admin-complaints-table .user-cell {
-  font-weight: 600;
-  color: #2c3e50;
+  font-weight: 700;
+  color: #E8EDF5;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .admin-complaints-table .email-cell {
-  color: #5a6c7d;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  color: #00B0FF;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
 }
 
 .admin-complaints-table .order-cell {
-  font-family: 'Courier New', monospace;
-  color: #667eea;
-  font-weight: 500;
+  font-family: 'Share Tech Mono', monospace;
+  color: #00B0FF;
+  font-weight: 600;
+  font-size: 0.82rem;
 }
 
 .admin-complaints-table .subject-cell {
-  color: #e74c3c;
-  font-weight: 500;
+  color: #E8EDF5;
+  font-weight: 600;
 }
 
 .admin-complaints-table .message-cell {
@@ -122,20 +133,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #555;
+  color: #9AAABB;
 }
 
 .admin-complaints-table .created-cell {
-  color: #7f8c8d;
-  font-size: 0.9rem;
+  color: #5C6E82;
+  font-size: 0.78rem;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 /* Empty State */
 .no-complaints {
   text-align: center;
   padding: 3rem;
-  color: #999;
-  font-size: 1.1rem;
+  color: #5C6E82;
+  font-size: 0.9rem;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.08em;
 }
 
 /* Responsive Design */

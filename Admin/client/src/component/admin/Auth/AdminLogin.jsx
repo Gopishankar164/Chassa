@@ -62,9 +62,17 @@ const AdminLogin = () => {
     <div className="admin-login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>🛡️ Admin Login</h1>
-          <p style={{ fontWeight: 700, fontSize: '1.1rem', color: '#8B1A1A', marginTop: 4 }}>Aaradhana</p>
-          <p>Access your admin dashboard</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 6 }}>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="#00B0FF" strokeWidth="1.5" fill="none"/>
+              <circle cx="14" cy="14" r="3" fill="#00B0FF"/>
+            </svg>
+            <div>
+              <div style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: '1.3rem', letterSpacing: '0.15em', color: '#E8EDF5' }}>CHASSA</div>
+              <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.45rem', color: '#00B0FF', letterSpacing: '0.2em' }}>ENGINEERING DRIVES</div>
+            </div>
+          </div>
+          <p style={{ fontSize: '0.85rem', color: '#9AAABB', marginTop: 4 }}>Admin Control Panel</p>
         </div>
 
         {error && (

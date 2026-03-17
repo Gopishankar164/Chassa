@@ -30,7 +30,7 @@ public class AuthController {
 
             Admin admin = adminRepository.findByEmail(email);
 
-            if (admin != null && admin.getPassword().equals(password)) {
+            if (admin != null && (passwordEncoder.matches(password, admin.getPassword()) || admin.getPassword().equals(password))) {
                 String token = JwtUtil.generateToken(admin);
 
                 return ResponseEntity.ok(Map.of(

@@ -20,7 +20,11 @@ const ProductManagement = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch(`${ADMIN_API_BASE_URL}/api/products?page=${page}&size=${size}`);
+      const token = localStorage.getItem('adminToken');
+      const res = await fetch(`${ADMIN_API_BASE_URL}/api/products?page=${page}&size=${size}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) return;
       const data = await res.json();
       if (data.length < size) setHasMore(false);
       setProducts(prev => page === 0 ? data : [...prev, ...data]);

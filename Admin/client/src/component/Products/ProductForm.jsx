@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  "https://dtborzpwbucajcjvjmml.supabase.co", // Replace with your Supabase URL
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0Ym9yenB3YnVjYWpjanZqbW1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY1MjExNzksImV4cCI6MjA3MjA5NzE3OX0.MI1LmvWeuojkGEAtIl4atJQoLIgWu34ho-TNmPVUHio" // Replace with your Supabase key
+  "https://xmowfwsynxqdconcfsrz.supabase.co", // Replace with your Supabase URL
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhtb3dmd3N5bnhxZGNvbmNmc3J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTYyMDMsImV4cCI6MjA4OTMzMjIwM30.Cw-ACUoQUiL6usa7mT7gcxnZCjEnUyLJd4ULaAI1vn0" // Replace with your Supabase key
 );
 //hii
 const ProductForm = ({ formState, setFormState, onSubmit, onClose, title, submitText }) => {

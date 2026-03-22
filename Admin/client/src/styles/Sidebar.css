@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&display=swap');
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 255px;
+  background: linear-gradient(180deg, #070B14 0%, #0D1A2E 50%, #070B14 100%);
+  color: white;
+  transition: width 0.3s cubic-bezier(.4, 0, .2, 1), transform 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5);
+  border-right: 1px solid #1E2D42;
+}
+
+.sidebar.closed {
+  width: 68px;
+}
+
+/* ── Header ── */
+.sidebar-header {
+  padding: 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,176,255,0.15);
+  min-height: 72px;
+  flex-shrink: 0;
+  background: rgba(0,176,255,0.03);
+}
+
+.sidebar-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.sidebar-logo-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1.5px solid #00B0FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(0,176,255,0.3);
+  overflow: hidden;
+}
+
+.sidebar-brand {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #E8EDF5;
+  white-space: nowrap;
+  letter-spacing: 0.12em;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.sidebar-brand-sub {
+  font-size: 9px;
+  color: #00B0FF;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-top: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.sidebar-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* ── Nav ── */
+.sidebar-nav {
+  padding: 12px 10px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 6px;
+  color: #9AAABB;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+.nav-item:hover {
+  background: rgba(0,176,255,0.08);
+  color: #00B0FF;
+  transform: translateX(2px);
+  border-left: 2px solid #00B0FF;
+}
+
+.nav-item.active {
+  background: rgba(21,101,192,0.25);
+  color: #00B0FF;
+  border-left: 2px solid #00B0FF;
+  box-shadow: 0 0 12px rgba(0,176,255,0.15);
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+}
+
+.nav-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+/* ── Footer ── */
+.sidebar-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+}
+
+.sidebar-footer-text {
+  font-size: 9px;
+  color: rgba(0,176,255,0.4);
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.15em;
+}
+
+/* ── Overlay ── */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+  display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 255px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+    width: 255px;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+}

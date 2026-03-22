@@ -1,0 +1,74 @@
+# ============================================================
+#  server/.gitignore — Spring Boot + Maven backend
+# ============================================================
+
+
+# ── Secrets & environment variables ─────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+
+# ── Maven build output ───────────────────────────────────────
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+HELP.md
+
+
+# ── Compiled & packaged artefacts ────────────────────────────
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+
+# ── Spring profile files that may contain raw secrets ────────
+application-local.properties
+application-dev.properties
+application-prod.properties
+application-secrets.properties
+
+
+# ── IDE configs ──────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.classpath
+.project
+.settings/
+.factorypath
+bin/
+.vscode/
+!.vscode/extensions.json
+
+
+# ── Docker local overrides ───────────────────────────────────
+docker-compose.override.yml
+docker-compose.local.yml
+
+
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+logs/
+spring.log
+
+
+# ── Misc ─────────────────────────────────────────────────────
+*.tmp
+*.temp
+*.swp
+*.swo
+.cache/

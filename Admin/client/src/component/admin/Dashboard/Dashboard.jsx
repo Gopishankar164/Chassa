@@ -21,18 +21,17 @@ const formatCurrency = (val) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val || 0);
 
 const STATUS_COLORS = {
-  DELIVERED: '#10b981',
-  PROCESSING: '#6366f1',
-  PENDING: '#f59e0b',
-  CANCELLED: '#ef4444',
-  CONFIRMED: '#8b5cf6',
-  SHIPPED: '#06b6d4',
-  OUT_FOR_DELIVERY: '#f97316',
+  DELIVERED:        '#34D399',
+  PROCESSING:       '#67E8F9',
+  PENDING:          '#FCD34D',
+  CANCELLED:        '#FC8181',
+  CONFIRMED:        '#FB923C',
+  SHIPPED:          '#6EE7B7',
+  OUT_FOR_DELIVERY: '#FCD34D',
 };
 
-const PIE_COLOR_LIST = ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f97316'];
+const PIE_COLOR_LIST = ['#34D399', '#67E8F9', '#FCD34D', '#FC8181', '#FB923C', '#6EE7B7', '#A78BFA'];
 
-// Get "YYYY-MM-DD" in LOCAL time (avoids UTC midnight shift for IST +5:30)
 const toLocalDateStr = (date) => {
   if (!date) return null;
   const y = date.getFullYear();
@@ -41,7 +40,6 @@ const toLocalDateStr = (date) => {
   return `${y}-${m}-${d}`;
 };
 
-// Build the last-7-days labels + date boundaries
 const getLast7Days = () => {
   const days = [];
   for (let i = 6; i >= 0; i--) {
@@ -49,22 +47,17 @@ const getLast7Days = () => {
     d.setDate(d.getDate() - i);
     days.push({
       label: d.toLocaleDateString('en-IN', { weekday: 'short' }),
-      dateStr: toLocalDateStr(d), // "YYYY-MM-DD" in local time
+      dateStr: toLocalDateStr(d),
     });
   }
   return days;
 };
 
-// Parse createdAt from Spring Boot — can be:
-//   - ISO string: "2026-03-07T10:38:19"
-//   - Array:       [2026, 3, 7, 10, 38, 19, 0]  (LocalDateTime default serialisation)
-//   - null / undefined
 const parseDate = (raw) => {
   if (!raw) return null;
   if (Array.isArray(raw)) {
-    // [year, month(1-based), day, hour, min, sec, nano]
     const [y, mo, d, h = 0, mi = 0, s = 0] = raw;
-    return new Date(y, mo - 1, d, h, mi, s); // local time, no UTC shift
+    return new Date(y, mo - 1, d, h, mi, s);
   }
   const d = new Date(raw);
   return isNaN(d.getTime()) ? null : d;
@@ -87,19 +80,15 @@ const Dashboard = () => {
   const fetchAll = useCallback(async () => {
     setLoading(true);
 
-    // ── 1. Dashboard stats ──
     try {
       const res = await fetch(`${ADMIN_API_BASE_URL}/api/dashboard/stats`, { headers });
       if (res.ok) setStats(await res.json());
     } catch { }
 
-    // ── 2. All orders → weekly revenue + order-status pie + recent orders ──
     try {
       const res = await fetch(`${ADMIN_API_BASE_URL}/api/admin/orders`, { headers });
       if (res.ok) {
         const allOrders = await res.json();
-
-        // Weekly revenue — last 7 days from real createdAt
         const days = getLast7Days();
         const revMap = {};
         days.forEach(d => { revMap[d.dateStr] = 0; });
@@ -118,7 +107,6 @@ const Dashboard = () => {
           revenue: Math.round(revMap[d.dateStr]),
         })));
 
-        // Order status pie — real counts
         const statusCount = {};
         allOrders.forEach(o => {
           const s = o.status || o.statusString || 'PENDING';
@@ -128,7 +116,6 @@ const Dashboard = () => {
           Object.entries(statusCount).map(([name, value]) => ({ name, value }))
         );
 
-        // Recent orders — sorted by createdAt desc, top 5
         const sorted = [...allOrders].sort((a, b) => {
           const ta = parseDate(a.createdAt)?.getTime() ?? 0;
           const tb = parseDate(b.createdAt)?.getTime() ?? 0;
@@ -138,7 +125,6 @@ const Dashboard = () => {
       }
     } catch { }
 
-    // ── 3. Products → low stock ──
     try {
       const res = await fetch(`${ADMIN_API_BASE_URL}/api/products`, { headers });
       if (res.ok) {
@@ -159,10 +145,10 @@ const Dashboard = () => {
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const statCards = [
-    { title: 'Business Value', value: formatCurrency(stats.revenue), icon: <TrendingUp size={22} />, color: 'indigo', sub: 'Total revenue generated' },
-    { title: 'Projects / Orders', value: stats.orders || 0, icon: <ShoppingCart size={22} />, color: 'emerald', sub: 'Client inquiries & orders' },
-    { title: 'Clients', value: stats.users || 0, icon: <Users size={22} />, color: 'violet', sub: 'Registered clients' },
-    { title: 'Components Listed', value: stats.products || 0, icon: <Package size={22} />, color: 'amber', sub: 'Active product catalogue' },
+    { title: 'Total Revenue',  value: formatCurrency(stats.revenue),  icon: <TrendingUp size={22} />, color: 'indigo', sub: 'Lifetime earnings' },
+    { title: 'Total Orders',   value: stats.orders || 0,               icon: <ShoppingCart size={22} />, color: 'emerald', sub: 'All transactions' },
+    { title: 'Registered Users', value: stats.users || 0,             icon: <Users size={22} />, color: 'violet', sub: 'Active accounts' },
+    { title: 'Products Listed', value: stats.products || 0,           icon: <Package size={22} />, color: 'amber', sub: 'In catalogue' },
   ];
 
   const getStatusClass = (status) => {
@@ -177,12 +163,6 @@ const Dashboard = () => {
   };
 
   const totalRevenueThisWeek = revenueData.reduce((s, d) => s + d.revenue, 0);
-  const totalOrdersThisWeek = recentOrders.filter(o => {
-    const d = parseDate(o.createdAt);
-    if (!d) return false;
-    const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
-    return d >= weekAgo;
-  }).length;
 
   return (
     <div className="dashboard-wrap">
@@ -193,13 +173,13 @@ const Dashboard = () => {
           <h1 className="welcome-greeting">{getGreeting()}, {adminName} 👋</h1>
           <p className="welcome-sub">
             {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-            &nbsp;·&nbsp;Last refreshed: {lastRefreshed.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+            &nbsp;·&nbsp;Synced {lastRefreshed.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
           </p>
         </div>
         <div className="welcome-right">
           <button className="refresh-btn" onClick={fetchAll} disabled={loading}>
-            <RefreshCw size={15} className={loading ? 'spin' : ''} />
-            {loading ? 'Refreshing...' : 'Refresh'}
+            <RefreshCw size={14} className={loading ? 'spin' : ''} />
+            {loading ? 'Syncing…' : 'Sync Data'}
           </button>
         </div>
       </div>
@@ -210,7 +190,7 @@ const Dashboard = () => {
           <div key={i} className={`stat-card-new stat-${card.color}`}>
             <div className="stat-card-top">
               <div className="stat-icon-wrap">{card.icon}</div>
-              <span className="stat-trend-badge"><ArrowUp size={11} /> Live</span>
+              <span className="stat-trend-badge"><ArrowUp size={10} /> Live</span>
             </div>
             <div className="stat-value">{loading ? '—' : card.value}</div>
             <div className="stat-title">{card.title}</div>
@@ -222,55 +202,53 @@ const Dashboard = () => {
       {/* ── Charts Row ── */}
       <div className="charts-row">
 
-        {/* Weekly Revenue Trend — REAL DATA */}
+        {/* Weekly Revenue Trend */}
         <div className="chart-card chart-lg">
           <div className="chart-header">
             <div>
-              <h3 className="chart-title">Weekly Business Value Trend</h3>
+              <h3 className="chart-title">Revenue — Last 7 Days</h3>
               <p className="chart-sub">
-                Revenue from real orders · Last 7 days&nbsp;
+                Based on confirmed orders&nbsp;
                 {!loading && totalRevenueThisWeek > 0 && (
-                  <strong style={{ color: '#6366f1' }}>{formatCurrency(totalRevenueThisWeek)}</strong>
+                  <strong style={{ color: '#34D399' }}>{formatCurrency(totalRevenueThisWeek)}</strong>
                 )}
               </p>
             </div>
           </div>
           {loading ? (
-            <div className="chart-loading">
-              <div className="chart-skeleton" />
-            </div>
+            <div className="chart-loading"><div className="chart-skeleton" /></div>
           ) : revenueData.every(d => d.revenue === 0) ? (
-            <div className="panel-empty">No order revenue in the last 7 days</div>
+            <div className="panel-empty">No revenue data this week</div>
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={revenueData} margin={{ top: 5, right: 20, left: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.25} />
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#34D399" stopOpacity={0.22} />
+                    <stop offset="95%" stopColor="#34D399" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false}
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(52,211,153,0.08)" />
+                <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#484F58' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 12, fill: '#484F58' }} axisLine={false} tickLine={false}
                   tickFormatter={v => v >= 1000 ? `₹${(v / 1000).toFixed(0)}k` : `₹${v}`} />
                 <Tooltip
                   formatter={(v) => [`₹${Number(v).toLocaleString('en-IN')}`, 'Revenue']}
-                  contentStyle={{ borderRadius: 10, border: 'none', boxShadow: '0 8px 24px rgba(0,0,0,.12)', fontSize: 13 }}
+                  contentStyle={{ borderRadius: 10, background: '#1C2230', border: '1px solid rgba(52,211,153,0.20)', boxShadow: '0 8px 24px rgba(0,0,0,.35)', fontSize: 13, color: '#F0F6FC' }}
                 />
-                <Area type="monotone" dataKey="revenue" stroke="#6366f1" strokeWidth={2.5}
-                  fill="url(#revenueGrad)" dot={{ fill: '#6366f1', r: 4 }} activeDot={{ r: 6 }} />
+                <Area type="monotone" dataKey="revenue" stroke="#34D399" strokeWidth={2.5}
+                  fill="url(#revenueGrad)" dot={{ fill: '#34D399', r: 4 }} activeDot={{ r: 6, fill: '#6EE7B7' }} />
               </AreaChart>
             </ResponsiveContainer>
           )}
         </div>
 
-        {/* Order Status Pie — REAL DATA */}
+        {/* Order Status Pie */}
         <div className="chart-card chart-sm">
           <div className="chart-header">
             <div>
-              <h3 className="chart-title">Inquiry Status</h3>
-              <p className="chart-sub">Live distribution from all client inquiries</p>
+              <h3 className="chart-title">Order Status</h3>
+              <p className="chart-sub">Live distribution across all orders</p>
             </div>
           </div>
           {loading ? (
@@ -296,12 +274,12 @@ const Dashboard = () => {
                 </Pie>
                 <Tooltip
                   formatter={(value, name) => [value + ' orders', name]}
-                  contentStyle={{ borderRadius: 10, border: 'none', boxShadow: '0 8px 24px rgba(0,0,0,.12)', fontSize: 12 }}
+                  contentStyle={{ borderRadius: 10, background: '#1C2230', border: '1px solid rgba(52,211,153,0.20)', boxShadow: '0 8px 24px rgba(0,0,0,.35)', fontSize: 12, color: '#F0F6FC' }}
                 />
                 <Legend
                   iconType="circle" iconSize={9}
                   formatter={(val) => (
-                    <span style={{ fontSize: 11, color: '#64748b', textTransform: 'capitalize' }}>
+                    <span style={{ fontSize: 11, color: '#8B949E', textTransform: 'capitalize' }}>
                       {val.replace(/_/g, ' ')}
                     </span>
                   )}
@@ -315,12 +293,12 @@ const Dashboard = () => {
       {/* ── Bottom Row ── */}
       <div className="bottom-row">
 
-        {/* Recent Orders — REAL DATA */}
+        {/* Recent Orders */}
         <div className="panel panel-lg">
           <div className="panel-header">
             <div className="panel-title-row">
-              <ShoppingCart size={18} className="panel-icon" />
-              <h3 className="panel-title">Recent Inquiries</h3>
+              <ShoppingCart size={17} className="panel-icon" />
+              <h3 className="panel-title">Recent Orders</h3>
               {!loading && <span className="panel-count-badge">{recentOrders.length} shown</span>}
             </div>
             <a href="/admin/orders" className="panel-link">View All →</a>
@@ -328,21 +306,21 @@ const Dashboard = () => {
           <div className="recent-orders-table-wrap">
             {loading ? (
               <div className="skeleton-rows">
-                {[1, 2, 3, 4, 5].map(i => <div key={i} className="skeleton-row" />)}
+                {[1,2,3,4,5].map(i => <div key={i} className="skeleton-row" />)}
               </div>
             ) : recentOrders.length === 0 ? (
               <div className="panel-empty">
-                <ShoppingCart size={36} style={{ opacity: 0.2, margin: '0 auto 8px' }} />
+                <ShoppingCart size={36} style={{ opacity: 0.15, margin: '0 auto 8px' }} />
                 <p>No orders yet</p>
               </div>
             ) : (
               <table className="mini-table">
                 <thead>
                   <tr>
-                    <th>Inquiry ID</th>
-                    <th>Client</th>
+                    <th>Order ID</th>
+                    <th>Customer</th>
                     <th>Items</th>
-                    <th>Value</th>
+                    <th>Amount</th>
                     <th>Status</th>
                     <th>Date</th>
                   </tr>
@@ -355,8 +333,8 @@ const Dashboard = () => {
                       <tr key={order.id}>
                         <td className="mini-id">#{String(order.id).slice(-8)}</td>
                         <td>
-                          <div style={{ fontWeight: 600, fontSize: 13, color: '#1e293b' }}>{order.customerName || 'N/A'}</div>
-                          <div style={{ fontSize: 11, color: '#94a3b8' }}>{order.customerEmail || ''}</div>
+                          <div style={{ fontWeight: 600, fontSize: 13, color: '#F0F6FC' }}>{order.customerName || 'N/A'}</div>
+                          <div style={{ fontSize: 11, color: '#484F58' }}>{order.customerEmail || ''}</div>
                         </td>
                         <td>
                           <span className="badge-count">{items.length} item{items.length !== 1 ? 's' : ''}</span>
@@ -381,12 +359,12 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Low Stock Alert — REAL DATA */}
+        {/* Low Stock Alert */}
         <div className="panel panel-sm">
           <div className="panel-header">
             <div className="panel-title-row">
-              <AlertTriangle size={18} className="panel-icon panel-icon-warn" />
-              <h3 className="panel-title">Low Availability Alert</h3>
+              <AlertTriangle size={17} className="panel-icon panel-icon-warn" />
+              <h3 className="panel-title">Stock Alerts</h3>
               {!loading && lowStockProducts.length > 0 && (
                 <span className="panel-warn-badge">{lowStockProducts.length}</span>
               )}
@@ -396,23 +374,23 @@ const Dashboard = () => {
 
           {loading ? (
             <div className="skeleton-rows">
-              {[1, 2, 3].map(i => <div key={i} className="skeleton-row" />)}
+              {[1,2,3].map(i => <div key={i} className="skeleton-row" />)}
             </div>
           ) : lowStockProducts.length === 0 ? (
             <div className="panel-empty stock-ok">
               <div style={{ fontSize: 28, marginBottom: 6 }}>✅</div>
-              All components well stocked!
+              All products well stocked!
             </div>
           ) : (
             <div className="stock-list">
               {lowStockProducts.map(p => (
-                <div key={p.id} className={`stock-item ${p.stock <= 5 ? 'stock-critical' : 'stock-low'}`}>
+                <div key={p.id} className={`stock-item ${(p.stockQuantity ?? p.stock) <= 5 ? 'stock-critical' : 'stock-low'}`}>
                   <div className="stock-info">
                     <span className="stock-name">{p.name}</span>
                     <span className="stock-category">{p.category || 'Uncategorised'}</span>
                   </div>
                   <div className="stock-count">
-                    <span className="stock-num" style={{ color: (p.stockQuantity ?? p.stock) <= 5 ? '#ef4444' : '#f59e0b' }}>
+                    <span className="stock-num" style={{ color: (p.stockQuantity ?? p.stock) <= 5 ? '#FC8181' : '#FCD34D' }}>
                       {p.stockQuantity ?? p.stock}
                     </span>
                     <span className="stock-label">left</span>
@@ -429,19 +407,19 @@ const Dashboard = () => {
         <h3 className="quick-title">Quick Actions</h3>
         <div className="quick-actions-grid">
           <a href="/admin/products" className="quick-btn quick-indigo">
-            <Plus size={20} /><span>Add Component</span>
+            <Plus size={20} /><span>Add Product</span>
           </a>
           <a href="/admin/orders" className="quick-btn quick-emerald">
-            <Eye size={20} /><span>View Inquiries</span>
+            <Eye size={20} /><span>View Orders</span>
           </a>
           <a href="/admin/users" className="quick-btn quick-violet">
-            <Users size={20} /><span>Manage Clients</span>
+            <Users size={20} /><span>Manage Users</span>
           </a>
           <a href="/admin/payments" className="quick-btn quick-rose">
             <CreditCard size={20} /><span>Payments</span>
           </a>
           <a href="/admin/complaints" className="quick-btn quick-slate">
-            <AlertTriangle size={20} /><span>Support Tickets</span>
+            <AlertTriangle size={20} /><span>Support</span>
           </a>
         </div>
       </div>

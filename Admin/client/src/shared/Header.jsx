@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { LogOut, Menu } from 'lucide-react';
+import { LogOut, Menu, Bell } from 'lucide-react';
 import '../styles/Header.css';
 
 const pageTitles = {
-  '/admin/dashboard': 'Operations Dashboard',
-  '/admin/products': 'Engineering Products',
-  '/admin/orders': 'Client Inquiries',
-  '/admin/return-exchange': 'Returns & Exchange',
-  '/admin/users': 'Client Management',
-  '/admin/payments': 'Payment Management',
-  '/admin/complaints': 'Support Tickets',
-  '/admin/settings': 'Admin Settings',
+  '/admin/dashboard':  'Dashboard',
+  '/admin/products':   'Products',
+  '/admin/orders':     'Orders',
+  '/admin/analytics':  'Analytics',
+  '/admin/users':      'User Management',
+  '/admin/payments':   'Payment Management',
+  '/admin/complaints': 'Support Center',
+  '/admin/settings':   'Settings',
+};
+
+const pageSubs = {
+  '/admin/dashboard':  'Overview · Live metrics',
+  '/admin/products':   'Catalogue · Inventory',
+  '/admin/orders':     'Transactions · Fulfillment',
+  '/admin/analytics':  'Reports · Insights',
+  '/admin/users':      'Accounts · Permissions',
+  '/admin/payments':   'Finance · Billing',
+  '/admin/complaints': 'Tickets · Resolution',
+  '/admin/settings':   'Config · Preferences',
 };
 
 const Header = ({ onLogout, toggleSidebar }) => {
   const adminName = localStorage.getItem('adminName') || 'Admin';
-  const adminEmail = localStorage.getItem('adminEmail') || 'admin@aaradhana.com';
+  const adminEmail = localStorage.getItem('adminEmail') || 'admin@nexus.com';
   const location = useLocation();
   const pageTitle = pageTitles[location.pathname] || 'Admin Panel';
+  const pageSub = pageSubs[location.pathname] || 'Nexus Admin Console';
   const initials = adminName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-
-  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <header className="admin-header">
@@ -31,12 +41,17 @@ const Header = ({ onLogout, toggleSidebar }) => {
         </button>
         <div className="header-page-info">
           <h1 className="header-page-title">{pageTitle}</h1>
-          <span className="header-breadcrumb">Chassa Engineering Drives · Admin</span>
+          <span className="header-breadcrumb">{pageSub}</span>
         </div>
       </div>
 
       <div className="header-right">
-        <div className="header-profile" onClick={() => setShowDropdown(!showDropdown)}>
+        <button className="header-icon-btn" title="Notifications">
+          <Bell size={17} />
+          <span className="notif-dot" />
+        </button>
+
+        <div className="header-profile">
           <div className="header-avatar">{initials}</div>
           <div className="header-user-info">
             <span className="header-name">{adminName}</span>
@@ -45,8 +60,8 @@ const Header = ({ onLogout, toggleSidebar }) => {
         </div>
 
         <button className="logout-btn" onClick={onLogout} title="Logout">
-          <LogOut size={16} />
-          <span>Logout</span>
+          <LogOut size={15} />
+          <span>Sign out</span>
         </button>
       </div>
     </header>

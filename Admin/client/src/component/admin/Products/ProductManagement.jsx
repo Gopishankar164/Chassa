@@ -7,7 +7,7 @@ import {
   Input,
   Modal,
   ConfirmModal
-} from '../../shared';
+} from '../../../components/shared';
 import { Plus, Edit2, Trash2, Search } from 'lucide-react';
 
 const ProductManagement = () => {

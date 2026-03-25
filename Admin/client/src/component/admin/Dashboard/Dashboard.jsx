@@ -12,7 +12,7 @@ import {
   StatCard,
   Table,
   Button
-} from '../../shared';
+} from '../../../components/shared';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const Dashboard = () => {

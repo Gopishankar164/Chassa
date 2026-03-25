@@ -11,6 +11,7 @@ import UserOrderHistory from './component/admin/Users/UserOrderHistory';
 import AdminComplaints from './component/admin/Users/AdminComplaints';
 import ReturnExchangeManagement from './component/admin/ReturnExchange/ReturnExchangeManagement';
 import AdminSettings from './component/admin/Settings/AdminSettings';
+import Analytics from './component/admin/Analytics/Analytics';
 
 const ProtectedRoute = ({ children }) => {
   const adminToken = localStorage.getItem('adminToken');
@@ -39,6 +40,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="products" element={<ProductManagement />} />
           <Route path="orders" element={<OrderManagement />} />
+          <Route path="analytics" element={<Analytics />} />
           <Route path="return-exchange" element={<ReturnExchangeManagement />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="users/:userId/orders" element={<UserOrderHistory />} />

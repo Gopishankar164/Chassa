@@ -1,429 +1,156 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  AreaChart, Area, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
-} from 'recharts';
-import {
-  TrendingUp, ShoppingCart, Users, Package, AlertTriangle,
-  RefreshCw, ArrowUp, Plus, Eye, CreditCard
+import React, { useState, useEffect } from 'react';
+import { 
+  ShoppingCart, 
+  Package, 
+  Users, 
+  TrendingUp,
+  DollarSign
 } from 'lucide-react';
-import '../../../styles/Dashboard.css';
-import ADMIN_API_BASE_URL from '../../../config/api';
-
-const getGreeting = () => {
-  const h = new Date().getHours();
-  if (h < 12) return 'Good Morning';
-  if (h < 17) return 'Good Afternoon';
-  return 'Good Evening';
-};
-
-const formatCurrency = (val) =>
-  new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val || 0);
-
-const STATUS_COLORS = {
-  DELIVERED:        '#34D399',
-  PROCESSING:       '#67E8F9',
-  PENDING:          '#FCD34D',
-  CANCELLED:        '#FC8181',
-  CONFIRMED:        '#FB923C',
-  SHIPPED:          '#6EE7B7',
-  OUT_FOR_DELIVERY: '#FCD34D',
-};
-
-const PIE_COLOR_LIST = ['#34D399', '#67E8F9', '#FCD34D', '#FC8181', '#FB923C', '#6EE7B7', '#A78BFA'];
-
-const toLocalDateStr = (date) => {
-  if (!date) return null;
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-};
-
-const getLast7Days = () => {
-  const days = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    days.push({
-      label: d.toLocaleDateString('en-IN', { weekday: 'short' }),
-      dateStr: toLocalDateStr(d),
-    });
-  }
-  return days;
-};
-
-const parseDate = (raw) => {
-  if (!raw) return null;
-  if (Array.isArray(raw)) {
-    const [y, mo, d, h = 0, mi = 0, s = 0] = raw;
-    return new Date(y, mo - 1, d, h, mi, s);
-  }
-  const d = new Date(raw);
-  return isNaN(d.getTime()) ? null : d;
-};
+import {
+  PageHeader,
+  Card,
+  StatCard,
+  Table,
+  Button
+} from '../../shared';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const Dashboard = () => {
-  const adminName = localStorage.getItem('adminName') || 'Admin';
+  const [stats, setStats] = useState({
+    totalRevenue: 45250.50,
+    totalOrders: 1024,
+    totalProducts: 342,
+    totalUsers: 2851,
+    monthlyGrowth: 12.5,
+  });
 
-  const [stats, setStats] = useState({ revenue: 0, products: 0, users: 0, orders: 0 });
-  const [revenueData, setRevenueData] = useState([]);
-  const [orderStatusData, setOrderStatusData] = useState([]);
-  const [recentOrders, setRecentOrders] = useState([]);
-  const [lowStockProducts, setLowStockProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [lastRefreshed, setLastRefreshed] = useState(new Date());
+  const [recentOrders, setRecentOrders] = useState([
+    { id: '#ORD001', customer: 'John Doe', amount: 250.00, status: 'delivered', date: '2024-03-25' },
+    { id: '#ORD002', customer: 'Jane Smith', amount: 150.50, status: 'processing', date: '2024-03-25' },
+    { id: '#ORD003', customer: 'Mike Johnson', amount: 890.00, status: 'pending', date: '2024-03-24' },
+    { id: '#ORD004', customer: 'Sarah Williams', amount: 420.25, status: 'delivered', date: '2024-03-24' },
+  ]);
 
-  const token = localStorage.getItem('adminToken');
-  const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+  const [chartData] = useState([
+    { month: 'Jan', sales: 4000, revenue: 2400 },
+    { month: 'Feb', sales: 3000, revenue: 1398 },
+    { month: 'Mar', sales: 2000, revenue: 9800 },
+    { month: 'Apr', sales: 2780, revenue: 3908 },
+    { month: 'May', sales: 1890, revenue: 4800 },
+    { month: 'Jun', sales: 2390, revenue: 3800 },
+  ]);
 
-  const fetchAll = useCallback(async () => {
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${ADMIN_API_BASE_URL}/api/dashboard/stats`, { headers });
-      if (res.ok) setStats(await res.json());
-    } catch { }
-
-    try {
-      const res = await fetch(`${ADMIN_API_BASE_URL}/api/admin/orders`, { headers });
-      if (res.ok) {
-        const allOrders = await res.json();
-        const days = getLast7Days();
-        const revMap = {};
-        days.forEach(d => { revMap[d.dateStr] = 0; });
-
-        allOrders.forEach(order => {
-          const d = parseDate(order.createdAt);
-          if (!d) return;
-          const dateStr = toLocalDateStr(d);
-          if (revMap[dateStr] !== undefined) {
-            revMap[dateStr] += order.total || order.totalAmount || 0;
-          }
-        });
-
-        setRevenueData(days.map(d => ({
-          day: d.label,
-          revenue: Math.round(revMap[d.dateStr]),
-        })));
-
-        const statusCount = {};
-        allOrders.forEach(o => {
-          const s = o.status || o.statusString || 'PENDING';
-          statusCount[s] = (statusCount[s] || 0) + 1;
-        });
-        setOrderStatusData(
-          Object.entries(statusCount).map(([name, value]) => ({ name, value }))
-        );
-
-        const sorted = [...allOrders].sort((a, b) => {
-          const ta = parseDate(a.createdAt)?.getTime() ?? 0;
-          const tb = parseDate(b.createdAt)?.getTime() ?? 0;
-          return tb - ta;
-        });
-        setRecentOrders(sorted.slice(0, 5));
-      }
-    } catch { }
-
-    try {
-      const res = await fetch(`${ADMIN_API_BASE_URL}/api/products`, { headers });
-      if (res.ok) {
-        const prods = await res.json();
-        const allProds = Array.isArray(prods) ? prods : [];
-        const low = allProds
-          .filter(p => { const q = p.stockQuantity ?? p.stock; return q != null && q <= 15; })
-          .sort((a, b) => (a.stockQuantity ?? a.stock ?? 999) - (b.stockQuantity ?? b.stock ?? 999))
-          .slice(0, 6);
-        setLowStockProducts(low);
-      }
-    } catch { }
-
-    setLoading(false);
-    setLastRefreshed(new Date());
-  }, []);
-
-  useEffect(() => { fetchAll(); }, [fetchAll]);
-
-  const statCards = [
-    { title: 'Total Revenue',  value: formatCurrency(stats.revenue),  icon: <TrendingUp size={22} />, color: 'indigo', sub: 'Lifetime earnings' },
-    { title: 'Total Orders',   value: stats.orders || 0,               icon: <ShoppingCart size={22} />, color: 'emerald', sub: 'All transactions' },
-    { title: 'Registered Users', value: stats.users || 0,             icon: <Users size={22} />, color: 'violet', sub: 'Active accounts' },
-    { title: 'Products Listed', value: stats.products || 0,           icon: <Package size={22} />, color: 'amber', sub: 'In catalogue' },
-  ];
-
-  const getStatusClass = (status) => {
-    const s = (status || '').toLowerCase();
-    if (s === 'delivered') return 'status-delivered';
-    if (s === 'processing') return 'status-processing';
-    if (s === 'pending') return 'status-pending-badge';
-    if (s === 'cancelled') return 'status-cancelled';
-    if (s === 'shipped') return 'status-shipped';
-    if (s === 'out_for_delivery') return 'status-out-delivery';
-    return 'status-confirmed';
+  const statusColor = (status) => {
+    const colors = {
+      delivered: 'text-green-600 bg-green-50',
+      processing: 'text-blue-600 bg-blue-50',
+      pending: 'text-orange-600 bg-orange-50',
+      cancelled: 'text-red-600 bg-red-50',
+    };
+    return colors[status] || colors.pending;
   };
 
-  const totalRevenueThisWeek = revenueData.reduce((s, d) => s + d.revenue, 0);
-
   return (
-    <div className="dashboard-wrap">
+    <div>
+      <PageHeader
+        title="Dashboard"
+        subtitle="Welcome back! Here's your business overview"
+      />
 
-      {/* ── Welcome Banner ── */}
-      <div className="welcome-banner">
-        <div className="welcome-left">
-          <h1 className="welcome-greeting">{getGreeting()}, {adminName} 👋</h1>
-          <p className="welcome-sub">
-            {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-            &nbsp;·&nbsp;Synced {lastRefreshed.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
-          </p>
-        </div>
-        <div className="welcome-right">
-          <button className="refresh-btn" onClick={fetchAll} disabled={loading}>
-            <RefreshCw size={14} className={loading ? 'spin' : ''} />
-            {loading ? 'Syncing…' : 'Sync Data'}
-          </button>
-        </div>
+      {/* Key Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <StatCard
+          icon={DollarSign}
+          label="Total Revenue"
+          value={`$${stats.totalRevenue.toLocaleString()}`}
+          trend={{ positive: true, percentage: 12.5 }}
+          color="green"
+        />
+        <StatCard
+          icon={ShoppingCart}
+          label="Total Orders"
+          value={stats.totalOrders.toLocaleString()}
+          trend={{ positive: true, percentage: 8.2 }}
+          color="blue"
+        />
+        <StatCard
+          icon={Package}
+          label="Total Products"
+          value={stats.totalProducts}
+          trend={{ positive: false, percentage: 2.1 }}
+          color="orange"
+        />
+        <StatCard
+          icon={Users}
+          label="Total Users"
+          value={stats.totalUsers}
+          trend={{ positive: true, percentage: 5.3 }}
+          color="blue"
+        />
+        <StatCard
+          icon={TrendingUp}
+          label="Monthly Growth"
+          value={`${stats.monthlyGrowth}%`}
+          color="green"
+        />
       </div>
 
-      {/* ── Stat Cards ── */}
-      <div className="stat-cards-grid">
-        {statCards.map((card, i) => (
-          <div key={i} className={`stat-card-new stat-${card.color}`}>
-            <div className="stat-card-top">
-              <div className="stat-icon-wrap">{card.icon}</div>
-              <span className="stat-trend-badge"><ArrowUp size={10} /> Live</span>
-            </div>
-            <div className="stat-value">{loading ? '—' : card.value}</div>
-            <div className="stat-title">{card.title}</div>
-            <div className="stat-sub">{card.sub}</div>
-          </div>
-        ))}
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <Card title="Sales Trend" subtitle="Last 6 months performance">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="month" stroke="#6b7280" />
+              <YAxis stroke="#6b7280" />
+              <Tooltip />
+              <Line type="monotone" dataKey="sales" stroke="#3b82f6" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+
+        <Card title="Revenue Comparison" subtitle="Sales vs Revenue">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="month" stroke="#6b7280" />
+              <YAxis stroke="#6b7280" />
+              <Tooltip />
+              <Bar dataKey="revenue" fill="#10b981" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
       </div>
 
-      {/* ── Charts Row ── */}
-      <div className="charts-row">
-
-        {/* Weekly Revenue Trend */}
-        <div className="chart-card chart-lg">
-          <div className="chart-header">
-            <div>
-              <h3 className="chart-title">Revenue — Last 7 Days</h3>
-              <p className="chart-sub">
-                Based on confirmed orders&nbsp;
-                {!loading && totalRevenueThisWeek > 0 && (
-                  <strong style={{ color: '#34D399' }}>{formatCurrency(totalRevenueThisWeek)}</strong>
-                )}
-              </p>
-            </div>
-          </div>
-          {loading ? (
-            <div className="chart-loading"><div className="chart-skeleton" /></div>
-          ) : revenueData.every(d => d.revenue === 0) ? (
-            <div className="panel-empty">No revenue data this week</div>
-          ) : (
-            <ResponsiveContainer width="100%" height={220}>
-              <AreaChart data={revenueData} margin={{ top: 5, right: 20, left: 10, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#34D399" stopOpacity={0.22} />
-                    <stop offset="95%" stopColor="#34D399" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(52,211,153,0.08)" />
-                <XAxis dataKey="day" tick={{ fontSize: 12, fill: '#484F58' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: '#484F58' }} axisLine={false} tickLine={false}
-                  tickFormatter={v => v >= 1000 ? `₹${(v / 1000).toFixed(0)}k` : `₹${v}`} />
-                <Tooltip
-                  formatter={(v) => [`₹${Number(v).toLocaleString('en-IN')}`, 'Revenue']}
-                  contentStyle={{ borderRadius: 10, background: '#1C2230', border: '1px solid rgba(52,211,153,0.20)', boxShadow: '0 8px 24px rgba(0,0,0,.35)', fontSize: 13, color: '#F0F6FC' }}
-                />
-                <Area type="monotone" dataKey="revenue" stroke="#34D399" strokeWidth={2.5}
-                  fill="url(#revenueGrad)" dot={{ fill: '#34D399', r: 4 }} activeDot={{ r: 6, fill: '#6EE7B7' }} />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-
-        {/* Order Status Pie */}
-        <div className="chart-card chart-sm">
-          <div className="chart-header">
-            <div>
-              <h3 className="chart-title">Order Status</h3>
-              <p className="chart-sub">Live distribution across all orders</p>
-            </div>
-          </div>
-          {loading ? (
-            <div className="chart-loading"><div className="chart-skeleton round" /></div>
-          ) : orderStatusData.length === 0 ? (
-            <div className="panel-empty">No orders yet</div>
-          ) : (
-            <ResponsiveContainer width="100%" height={210}>
-              <PieChart>
-                <Pie
-                  data={orderStatusData}
-                  cx="50%" cy="45%"
-                  innerRadius={52} outerRadius={78}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {orderStatusData.map((entry, idx) => (
-                    <Cell
-                      key={idx}
-                      fill={STATUS_COLORS[entry.name] || PIE_COLOR_LIST[idx % PIE_COLOR_LIST.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value, name) => [value + ' orders', name]}
-                  contentStyle={{ borderRadius: 10, background: '#1C2230', border: '1px solid rgba(52,211,153,0.20)', boxShadow: '0 8px 24px rgba(0,0,0,.35)', fontSize: 12, color: '#F0F6FC' }}
-                />
-                <Legend
-                  iconType="circle" iconSize={9}
-                  formatter={(val) => (
-                    <span style={{ fontSize: 11, color: '#8B949E', textTransform: 'capitalize' }}>
-                      {val.replace(/_/g, ' ')}
-                    </span>
-                  )}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      </div>
-
-      {/* ── Bottom Row ── */}
-      <div className="bottom-row">
-
-        {/* Recent Orders */}
-        <div className="panel panel-lg">
-          <div className="panel-header">
-            <div className="panel-title-row">
-              <ShoppingCart size={17} className="panel-icon" />
-              <h3 className="panel-title">Recent Orders</h3>
-              {!loading && <span className="panel-count-badge">{recentOrders.length} shown</span>}
-            </div>
-            <a href="/admin/orders" className="panel-link">View All →</a>
-          </div>
-          <div className="recent-orders-table-wrap">
-            {loading ? (
-              <div className="skeleton-rows">
-                {[1,2,3,4,5].map(i => <div key={i} className="skeleton-row" />)}
-              </div>
-            ) : recentOrders.length === 0 ? (
-              <div className="panel-empty">
-                <ShoppingCart size={36} style={{ opacity: 0.15, margin: '0 auto 8px' }} />
-                <p>No orders yet</p>
-              </div>
-            ) : (
-              <table className="mini-table">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Items</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentOrders.map(order => {
-                    const items = order.items || order.orderItems || [];
-                    const amount = order.total || order.totalAmount || 0;
-                    return (
-                      <tr key={order.id}>
-                        <td className="mini-id">#{String(order.id).slice(-8)}</td>
-                        <td>
-                          <div style={{ fontWeight: 600, fontSize: 13, color: '#F0F6FC' }}>{order.customerName || 'N/A'}</div>
-                          <div style={{ fontSize: 11, color: '#484F58' }}>{order.customerEmail || ''}</div>
-                        </td>
-                        <td>
-                          <span className="badge-count">{items.length} item{items.length !== 1 ? 's' : ''}</span>
-                        </td>
-                        <td className="mini-amount">₹{Number(amount).toLocaleString('en-IN')}</td>
-                        <td>
-                          <span className={`mini-badge ${getStatusClass(order.status || order.statusString)}`}>
-                            {(order.status || order.statusString || 'N/A').toString().replace(/_/g, ' ')}
-                          </span>
-                        </td>
-                        <td className="mini-date">
-                          {parseDate(order.createdAt)
-                            ? parseDate(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
-                            : 'N/A'}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
-
-        {/* Low Stock Alert */}
-        <div className="panel panel-sm">
-          <div className="panel-header">
-            <div className="panel-title-row">
-              <AlertTriangle size={17} className="panel-icon panel-icon-warn" />
-              <h3 className="panel-title">Stock Alerts</h3>
-              {!loading && lowStockProducts.length > 0 && (
-                <span className="panel-warn-badge">{lowStockProducts.length}</span>
-              )}
-            </div>
-            <a href="/admin/products" className="panel-link">Manage →</a>
-          </div>
-
-          {loading ? (
-            <div className="skeleton-rows">
-              {[1,2,3].map(i => <div key={i} className="skeleton-row" />)}
-            </div>
-          ) : lowStockProducts.length === 0 ? (
-            <div className="panel-empty stock-ok">
-              <div style={{ fontSize: 28, marginBottom: 6 }}>✅</div>
-              All products well stocked!
-            </div>
-          ) : (
-            <div className="stock-list">
-              {lowStockProducts.map(p => (
-                <div key={p.id} className={`stock-item ${(p.stockQuantity ?? p.stock) <= 5 ? 'stock-critical' : 'stock-low'}`}>
-                  <div className="stock-info">
-                    <span className="stock-name">{p.name}</span>
-                    <span className="stock-category">{p.category || 'Uncategorised'}</span>
-                  </div>
-                  <div className="stock-count">
-                    <span className="stock-num" style={{ color: (p.stockQuantity ?? p.stock) <= 5 ? '#FC8181' : '#FCD34D' }}>
-                      {p.stockQuantity ?? p.stock}
-                    </span>
-                    <span className="stock-label">left</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Quick Actions ── */}
-      <div className="quick-actions-row">
-        <h3 className="quick-title">Quick Actions</h3>
-        <div className="quick-actions-grid">
-          <a href="/admin/products" className="quick-btn quick-indigo">
-            <Plus size={20} /><span>Add Product</span>
-          </a>
-          <a href="/admin/orders" className="quick-btn quick-emerald">
-            <Eye size={20} /><span>View Orders</span>
-          </a>
-          <a href="/admin/users" className="quick-btn quick-violet">
-            <Users size={20} /><span>Manage Users</span>
-          </a>
-          <a href="/admin/payments" className="quick-btn quick-rose">
-            <CreditCard size={20} /><span>Payments</span>
-          </a>
-          <a href="/admin/complaints" className="quick-btn quick-slate">
-            <AlertTriangle size={20} /><span>Support</span>
-          </a>
-        </div>
-      </div>
-
+      {/* Recent Orders */}
+      <Card
+        title="Recent Orders"
+        subtitle="Last orders from your store"
+        headerAction={
+          <Button variant="secondary" size="sm">
+            View All
+          </Button>
+        }
+      >
+        <Table
+          columns={[
+            { key: 'id', label: 'Order ID', sortable: true },
+            { key: 'customer', label: 'Customer', sortable: true },
+            { key: 'amount', label: 'Amount', sortable: true, render: (val) => `$${val.toFixed(2)}` },
+            { 
+              key: 'status', 
+              label: 'Status',
+              render: (status) => (
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor(status)}`}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </span>
+              )
+            },
+            { key: 'date', label: 'Date', sortable: true },
+          ]}
+          data={recentOrders}
+        />
+      </Card>
     </div>
   );
 };

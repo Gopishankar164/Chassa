@@ -1,10 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import ProductForm from './ProductForm';
-import Modal from '../../../shared/Modal';
-import '../../../styles/GlobalAdmin.css';
-import '../../../styles/ProductManagement.css';
-import ADMIN_API_BASE_URL from '../../../config/api';
-import { Plus, Package, RefreshCw } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  PageHeader,
+  Card,
+  Table,
+  Button,
+  Input,
+  Modal,
+  ConfirmModal
+} from '../../shared';
+import { Plus, Edit2, Trash2, Search } from 'lucide-react';
+
+const ProductManagement = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [products, setProducts] = useState([
+    { id: 1, name: 'Wireless Headphones', category: 'Electronics', price: 79.99, stock: 45, status: 'active' },
+    { id: 2, name: 'Phone Case', category: 'Accessories', price: 19.99, stock: 120, status: 'active' },
+    { id: 3, name: 'USB-C Cable', category: 'Electronics', price: 12.99, stock: 8, status: 'active' },
+    { id: 4, name: 'Screen Protector', category: 'Accessories', price: 9.99, stock: 50, status: 'inactive' },
+  ]);
+
+  const filteredProducts = products.filter(p =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleCreateProduct = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const handleEditProduct = (product) => {
+    setSelectedProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDeleteProduct = (product) => {
+    setSelectedProduct(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setProducts(products.filter(p => p.id !== selectedProduct.id));
+    setIsDeleteModalOpen(false);
+  };
+
+  const stockStatus = (stock) => {
+    if (stock <= 5) return { level: 'critical', color: 'red', label: 'Low Stock' };
+    if (stock <= 20) return { level: 'warning', color: 'yellow', label: 'Limited Stock' };
+    return { level: 'good', color: 'green', label: 'In Stock' };
+  };
+
+  return (
+    <div>
+      <PageHeader
+        title="Products Management"
+        subtitle="Manage your product catalog and inventory"
+        actions={
+          <Button onClick={handleCreateProduct}>
+            <Plus size={18} />
+            Add Product
+          </Button>
+        }
+      />
+
+      {/* Search Bar */}
+      <Card className="mb-6">
+        <div className="relative">
+          <Search size={18} className="absolute left-4 top-3.5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search products by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </Card>
+
+      {/* Products Table */}
+      <Card>
+        <Table
+          columns={[
+            { key: 'id', label: 'ID', sortable: true },
+            { key: 'name', label: 'Product Name', sortable: true },
+            { key: 'category', label: 'Category', sortable: true },
+            {
+              key: 'price',
+              label: 'Price',
+              sortable: true,
+              render: (price) => `$${price.toFixed(2)}`
+            },
+            {
+              key: 'stock',
+              label: 'Stock Status',
+              render: (stock) => {
+                const status = stockStatus(stock);
+                return (
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full bg-${status.color}-500`}></div>
+                    <span className="text-sm">{status.label} ({stock})</span>
+                  </div>
+                );
+              }
+            },
+            {
+              key: 'status',
+              label: 'Status',
+              render: (status) => (
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700'
+                }`}>
+                  {status === 'active' ? 'Active' : 'Inactive'}
+                </span>
+              )
+            },
+            {
+              key: 'id',
+              label: 'Actions',
+              render: (id, row) => (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditProduct(row)}
+                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProduct(row)}
+                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              )
+            },
+          ]}
+          data={filteredProducts}
+        />
+      </Card>
+
+      {/* Create/Edit Modal */}
+      <Modal
+        isOpen={isCreateModalOpen || isEditModalOpen}
+        onClose={() => {
+          setIsCreateModalOpen(false);
+          setIsEditModalOpen(false);
+          setSelectedProduct(null);
+        }}
+        title={selectedProduct ? 'Edit Product' : 'Create New Product'}
+        size="lg"
+      >
+        <form className="space-y-4">
+          <Input label="Product Name" placeholder="Enter product name" required />
+          <Input label="Category" placeholder="Enter category" required />
+          <Input label="Price" type="number" placeholder="0.00" required />
+          <Input label="Stock Quantity" type="number" placeholder="0" required />
+          <textarea
+            placeholder="Product description..."
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={4}
+          />
+        </form>
+      </Modal>
+
+      {/* Delete Confirmation */}
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setSelectedProduct(null);
+        }}
+        onConfirm={confirmDelete}
+        title="Delete Product"
+        message={`Are you sure you want to delete "${selectedProduct?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        isDangerous
+      />
+    </div>
+  );
+};
+
+export default ProductManagement;
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);

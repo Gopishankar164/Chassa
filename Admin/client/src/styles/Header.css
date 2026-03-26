@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+.admin-header {
+  background: rgba(13, 17, 23, 0.98);
+  backdrop-filter: blur(16px);
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(52, 211, 153, 0.09);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 62px;
+  box-shadow: 0 1px 16px rgba(0,0,0,0.45);
+}
+
+/* Left */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.menu-toggle {
+  background: rgba(52, 211, 153, 0.06);
+  border: 1px solid rgba(52, 211, 153, 0.14);
+  color: rgba(52, 211, 153, 0.45);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.menu-toggle:hover {
+  background: rgba(52, 211, 153, 0.12);
+  color: #34D399;
+  border-color: rgba(52, 211, 153, 0.30);
+}
+
+.header-page-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.header-page-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #F0F6FC;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.header-breadcrumb {
+  font-size: 9.5px;
+  color: rgba(52, 211, 153, 0.50);
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Right */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-icon-btn {
+  background: rgba(52, 211, 153, 0.06);
+  border: 1px solid rgba(52, 211, 153, 0.14);
+  color: rgba(139, 148, 158, 0.70);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.header-icon-btn:hover {
+  background: rgba(52, 211, 153, 0.12);
+  color: #34D399;
+  border-color: rgba(52, 211, 153, 0.28);
+}
+
+.notif-dot {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  background: #FC8181;
+  border-radius: 50%;
+  border: 1.5px solid rgba(13, 17, 23, 0.98);
+  box-shadow: 0 0 6px rgba(252, 129, 129, 0.55);
+}
+
+.header-profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 10px 5px 5px;
+  border-radius: 9px;
+  cursor: pointer;
+  border: 1px solid rgba(52, 211, 153, 0.14);
+  background: rgba(52, 211, 153, 0.05);
+  transition: all 0.2s;
+}
+
+.header-profile:hover {
+  background: rgba(52, 211, 153, 0.10);
+  border-color: rgba(52, 211, 153, 0.26);
+}
+
+.header-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.22), rgba(103, 232, 249, 0.18));
+  border: 1px solid rgba(52, 211, 153, 0.32);
+  color: #34D399;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.header-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.header-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #F0F6FC;
+  white-space: nowrap;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.header-email {
+  font-size: 9.5px;
+  color: rgba(52, 211, 153, 0.50);
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(252, 129, 129, 0.07);
+  color: #FC8181;
+  border: 1px solid rgba(252, 129, 129, 0.18);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.logout-btn:hover {
+  background: #FC8181;
+  color: #0D1117;
+  border-color: #FC8181;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(252, 129, 129, 0.26);
+}
+
+@media (max-width: 640px) {
+  .admin-header      { padding: 0 14px; }
+  .header-user-info  { display: none; }
+  .header-breadcrumb { display: none; }
+  .logout-btn span   { display: none; }
+  .logout-btn        { padding: 8px 10px; }
+}

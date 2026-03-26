@@ -1,0 +1,35 @@
+/* Order Status Dropdown — Chassa Engineering Drives */
+.order-status-select {
+    padding: 7px 28px 7px 10px;
+    border-radius: var(--ad-r, 8px);
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #1E2D42;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background: #2A3A50;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%235C6E82' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+    min-width: 150px;
+    color: #9AAABB;
+    font-family: 'Barlow', sans-serif;
+    outline: none;
+}
+
+.order-status-select:hover {
+    border-color: rgba(0,176,255,0.3);
+    box-shadow: 0 0 0 2px rgba(0,176,255,0.08);
+}
+
+.order-status-select:focus {
+    border-color: #00B0FF;
+    box-shadow: 0 0 0 2px rgba(0,176,255,0.12);
+}
+
+.order-status-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -1,0 +1,282 @@
+/* UserManagement — Nexus Panel green/dark theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+.user-management-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #F0F6FC;
+  font-family: 'Outfit', sans-serif;
+  margin: 0 0 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(52,211,153,0.10);
+  letter-spacing: -0.02em;
+}
+
+.user-table-container,
+.users-table-container {
+  background: #1C2230;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(52,211,153,0.09);
+}
+
+.user-table,
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.user-table thead,
+.users-table thead {
+  background: #212D3A;
+}
+
+.user-table thead tr,
+.users-table thead tr {
+  border-bottom: 1px solid rgba(52,211,153,0.20);
+}
+
+.user-table th,
+.users-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #34D399;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-family: 'JetBrains Mono', monospace;
+  border: none;
+}
+
+.user-table td,
+.users-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(52,211,153,0.07);
+  vertical-align: middle;
+  color: #8B949E;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+}
+
+.user-table tbody tr:hover,
+.users-table tbody tr:hover { background: rgba(52,211,153,0.04); }
+
+.user-table tbody tr:last-child td,
+.users-table tbody tr:last-child td { border-bottom: none; }
+
+.user-name, .customer-name {
+  font-weight: 700;
+  color: #F0F6FC;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+}
+
+.user-email, .customer-email {
+  color: #484F58;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.user-role {
+  color: #34D399;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.user-status-badge {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.badge-success {
+  background: rgba(52,211,153,0.10);
+  color: #34D399;
+  border: 1px solid rgba(52,211,153,0.20);
+}
+
+.badge-warning {
+  background: rgba(252,211,77,0.10);
+  color: #FCD34D;
+  border: 1px solid rgba(252,211,77,0.20);
+}
+
+.badge-danger {
+  background: rgba(252,129,129,0.10);
+  color: #FC8181;
+  border: 1px solid rgba(252,129,129,0.20);
+}
+
+.user-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.user-action-btn {
+  padding: 7px 10px;
+  border: 1px solid rgba(52,211,153,0.14);
+  background: rgba(52,211,153,0.06);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  color: #8B949E;
+}
+
+.user-action-btn:hover {
+  background: rgba(52,211,153,0.12);
+  border-color: rgba(52,211,153,0.30);
+  color: #34D399;
+}
+
+.orders-count, .amount-spent, .pending-orders, .pending-payments {
+  font-weight: 700;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.amount-spent { color: #34D399; }
+.pending-orders, .pending-payments { color: #FC8181; }
+
+.order-count .count-badge {
+  background: rgba(52,211,153,0.10);
+  color: #34D399;
+  border: 1px solid rgba(52,211,153,0.20);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.total-amount {
+  font-weight: 700;
+  color: #34D399;
+  font-family: 'Outfit', sans-serif;
+}
+
+.last-order {
+  color: #484F58;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: center;
+}
+
+.view-orders-btn {
+  background: rgba(52,211,153,0.08);
+  color: #34D399;
+  border: 1px solid rgba(52,211,153,0.22);
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.view-orders-btn:hover {
+  background: #34D399;
+  color: #0D1117;
+  border-color: #34D399;
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(52,211,153,0.26);
+}
+
+.cart-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1C2230;
+  border: 1px solid rgba(52,211,153,0.20);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.60);
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.cart-modal h3 {
+  color: #F0F6FC;
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(52,211,153,0.12);
+  font-family: 'Outfit', sans-serif;
+}
+
+.cart-modal pre {
+  background: #212D3A;
+  padding: 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 12px;
+  color: #8B949E;
+  border: 1px solid rgba(52,211,153,0.09);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cart-modal button {
+  background: rgba(52,211,153,0.10);
+  color: #34D399;
+  border: 1px solid rgba(52,211,153,0.22);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cart-modal button:hover {
+  background: #34D399;
+  color: #0D1117;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 768px) {
+  .user-table-container { overflow-x: auto; }
+  .user-table, .users-table { min-width: 600px; }
+  .user-actions { flex-direction: column; gap: 4px; }
+  .cart-modal { padding: 18px; margin: 14px; max-width: calc(100vw - 28px); }
+}

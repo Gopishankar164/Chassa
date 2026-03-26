@@ -1,0 +1,51 @@
+/* StarRating.css */
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star {
+    color: #ddd;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.star.half-filled {
+    background: linear-gradient(90deg, #ffc107 50%, #ddd 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.star-rating.interactive .star:hover {
+    color: #ffc107;
+    transform: scale(1.15);
+}
+
+.star-rating.small .star {
+    font-size: 14px;
+}
+
+.star-rating.medium .star {
+    font-size: 18px;
+}
+
+.star-rating.large .star {
+    font-size: 26px;
+}
+
+.rating-text {
+    margin-left: 6px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+
+.star-rating.interactive {
+    cursor: pointer;
+}

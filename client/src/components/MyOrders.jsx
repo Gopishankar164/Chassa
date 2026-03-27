@@ -113,13 +113,13 @@ const MyOrders = () => {
 
   const getOrderStatus = (status) => {
     const statusMap = {
-      'PENDING': { text: 'Order Placed', color: '#fbbf24', bgColor: '#fef3c7' },
-      'CONFIRMED': { text: 'Confirmed', color: '#3b82f6', bgColor: '#dbeafe' },
-      'PROCESSING': { text: 'Processing', color: '#8b5cf6', bgColor: '#e9d5ff' },
-      'SHIPPED': { text: 'Shipped', color: '#06b6d4', bgColor: '#cffafe' },
-      'OUT_FOR_DELIVERY': { text: 'Out for Delivery', color: '#f59e0b', bgColor: '#fef3c7' },
-      'DELIVERED': { text: 'Delivered', color: '#10b981', bgColor: '#d1fae5' },
-      'CANCELLED': { text: 'Cancelled', color: '#ef4444', bgColor: '#fee2e2' }
+      'PENDING': { text: 'Order Placed', color: '#3b82f6', bgColor: 'rgba(59, 130, 246, 0.1)' },
+      'CONFIRMED': { text: 'Confirmed', color: '#1565c0', bgColor: 'rgba(21, 101, 192, 0.1)' },
+      'PROCESSING': { text: 'Processing', color: '#00b0ff', bgColor: 'rgba(0, 176, 255, 0.1)' },
+      'SHIPPED': { text: 'Shipped', color: '#0d47a1', bgColor: 'rgba(13, 71, 161, 0.1)' },
+      'OUT_FOR_DELIVERY': { text: 'Out for Delivery', color: '#1976d2', bgColor: 'rgba(25, 118, 210, 0.1)' },
+      'DELIVERED': { text: 'Delivered', color: '#00c853', bgColor: 'rgba(0, 200, 83, 0.1)' },
+      'CANCELLED': { text: 'Cancelled', color: '#ff1744', bgColor: 'rgba(255, 23, 68, 0.1)' }
     };
     return statusMap[status] || { text: 'Confirmed', color: '#3b82f6', bgColor: '#dbeafe' };
   };
@@ -334,12 +334,6 @@ const MyOrders = () => {
                     className="view-details-btn"
                   >
                     VIEW DETAILS
-                  </button>
-                  <button
-                    onClick={() => navigate(`/track/${order.id}`)}
-                    className="track-order-btn"
-                  >
-                    TRACK ORDER
                   </button>
                   {canCancelOrder(order.status) && (
                     <button

@@ -42,11 +42,14 @@ const AdminLogin = () => {
       if (data.token) {
         localStorage.setItem('adminToken', data.token);
         localStorage.setItem('adminEmail', data.admin?.email || email);
-        localStorage.setItem('adminName', data.admin?.name || 'Admin');
-        localStorage.setItem('adminId', data.admin?.id || '');
+        localStorage.setItem('adminName',  data.admin?.name  || 'Admin');
+        localStorage.setItem('adminId',    data.admin?.id    || '');
+        // ✅ Save role — 'admin' or 'staff' — used for route guards and sidebar
+        localStorage.setItem('adminRole',  (data.admin?.role || 'admin').toLowerCase());
 
-        // ✅ Navigate to dashboard
-        navigate('/admin/dashboard');
+        // ✅ Staff go to products; admins go to dashboard
+        const role = (data.admin?.role || 'admin').toLowerCase();
+        navigate(role === 'staff' ? '/admin/products' : '/admin/dashboard');
       } else {
         throw new Error('No token received from server');
       }

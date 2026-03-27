@@ -33,7 +33,7 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Generate token from User object
+    // ── Generate token from User object ─────────────────────────────────────
     public static String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getId())
@@ -45,18 +45,28 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Generate token from Admin object
+    // ── Generate token from Admin object ────────────────────────────────────
+    // Works for both ADMIN and STAFF roles — the role stored in Admin.role is
+    // embedded directly into the JWT so JwtAuthenticationFilter can set the
+    // correct Spring Security authority (ROLE_ADMIN or ROLE_STAFF).
     public static String generateToken(Admin admin) {
+        // Use the persisted role; default to ADMIN for legacy records
+        String role = (admin.getRole() != null && !admin.getRole().isBlank())
+                ? admin.getRole().toUpperCase()
+                : "ADMIN";
+
         return Jwts.builder()
                 .setSubject(admin.getId())
                 .claim("email", admin.getEmail())
-                .claim("role", "ADMIN")
+                .claim("role", role)          // "ADMIN" or "STAFF"
                 .claim("name", admin.getName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
                 .compact();
     }
+
+    // ── Getters ─────────────────────────────────────────────────────────────
 
     public static String getUserId(String token) {
         return Jwts.parserBuilder()

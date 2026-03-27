@@ -1,63 +1,52 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Sidebar, Button } from '../components/shared';
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingCart, 
-  TrendingUp,
-  Users, 
-  DollarSign, 
-  RotateCcw, 
-  MessageSquare,
-  Settings,
-  LogOut 
+import { Sidebar } from '../components/shared';
+import {
+  LayoutDashboard, Package, ShoppingCart,
+  Users, MessageSquare,
 } from 'lucide-react';
+import '../styles/AdminLayout.css';
+import '../styles/Sidebar.css';
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const adminRole = localStorage.getItem('adminRole') || 'admin';
+  const isStaff   = adminRole === 'staff';
 
-  const navigationItems = [
+  // ── Full navigation for admins ──────────────────────────────────────────
+  const adminNav = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/admin/products', label: 'Products', icon: Package },
-    { path: '/admin/orders', label: 'Orders', icon: ShoppingCart },
-    { path: '/admin/analytics', label: 'Analytics', icon: TrendingUp },
-    { path: '/admin/users', label: 'Users', icon: Users },
-    { path: '/admin/payments', label: 'Payments', icon: DollarSign },
-    { path: '/admin/return-exchange', label: 'Returns & Exchanges', icon: RotateCcw },
-    { path: '/admin/complaints', label: 'Support', icon: MessageSquare },
-    { path: '/admin/settings', label: 'Settings', icon: Settings },
+    { path: '/admin/products',  label: 'Products',  icon: Package         },
+    { path: '/admin/orders',    label: 'Orders',    icon: ShoppingCart    },
+    { path: '/admin/users',     label: 'Users',     icon: Users           },
+    { path: '/admin/complaints',label: 'Support',   icon: MessageSquare   },
   ];
+
+  // ── Limited navigation for staff ──────────────────────────────────────
+  const staffNav = [
+    { path: '/admin/dashboard', label: 'Dashboard',        icon: LayoutDashboard },
+    { path: '/admin/products',  label: 'Products & Stock', icon: Package         },
+  ];
+
+  const navigationItems = isStaff ? staffNav : adminNav;
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminName');
+    localStorage.removeItem('adminId');
+    localStorage.removeItem('adminRole');
     navigate('/admin/login');
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <Sidebar items={navigationItems} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      
-      <div className="flex-1 flex flex-col md:ml-0">
-        {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Admin Dashboard</h2>
-          <Button 
-            variant="ghost" 
-            onClick={handleLogout}
-            className="text-red-600 hover:bg-red-50"
-          >
-            <LogOut size={18} />
-            Logout
-          </Button>
-        </header>
+    <div className="admin-layout">
+      <Sidebar items={navigationItems} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} onLogout={handleLogout} />
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-auto">
-          <div className="p-6 max-w-7xl mx-auto">
-            <Outlet />
-          </div>
+      <div className={`admin-main ${isSidebarOpen ? '' : 'sidebar-closed'}`}>
+        <main className="admin-content">
+          <Outlet />
         </main>
       </div>
     </div>

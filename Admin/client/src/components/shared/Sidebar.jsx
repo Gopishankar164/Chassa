@@ -1,63 +1,103 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import '../../styles/Sidebar.css';
 
-export const Sidebar = ({ items, isOpen, setIsOpen }) => {
+export const Sidebar = ({ items, isOpen, setIsOpen, onLogout }) => {
   return (
     <>
-      {/* Mobile toggle button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden fixed top-4 left-4 z-40 p-2 hover:bg-gray-100 rounded-lg"
-      >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Overlay for mobile */}
+      {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-20"
+          className="sidebar-overlay"
+          style={{ display: 'block' }}
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`
-        fixed md:static top-0 left-0 h-screen w-64 bg-gray-900 text-white flex flex-col z-30
-        transform transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-      `}>
-        {/* Logo/Brand */}
-        <div className="px-6 py-6 border-b border-gray-800">
-          <h1 className="text-2xl font-bold">Admin</h1>
+      <aside className={`sidebar ${isOpen ? '' : 'closed'}`}>
+        {/* Header / Brand */}
+        <div className="sidebar-header">
+          <div className="sidebar-logo-container">
+            <div className="sidebar-logo-circle">
+              <span style={{ fontSize: 16, fontWeight: 800, color: '#34D399', fontFamily: "'Outfit',sans-serif" }}>C</span>
+            </div>
+            {isOpen && (
+              <div className="sidebar-brand">
+                <span className="sidebar-brand-name">Chassa</span>
+                <span className="sidebar-brand-sub">Admin Panel</span>
+              </div>
+            )}
+          </div>
+          <button
+            className="sidebar-toggle-btn"
+            onClick={() => setIsOpen(!isOpen)}
+            title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          >
+            {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+          </button>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+        {/* Navigation */}
+        <nav className="sidebar-nav">
+          <div className="nav-section-label">{isOpen ? 'Navigation' : '···'}</div>
           {items.map(item => (
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg transition
-                ${isActive 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }
-              `}
-              onClick={() => setIsOpen(false)}
+              className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+              onClick={() => {
+                // Close sidebar on mobile when a link is clicked
+                if (window.innerWidth < 768) setIsOpen(false);
+              }}
+              title={!isOpen ? item.label : undefined}
             >
-              {item.icon && <item.icon size={20} />}
-              <span className="font-medium">{item.label}</span>
+              <span className="nav-icon">
+                {item.icon && <item.icon size={18} />}
+              </span>
+              {isOpen && <span className="nav-label">{item.label}</span>}
             </NavLink>
           ))}
         </nav>
 
-        {/* Logout Section */}
-        <div className="px-4 py-4 border-t border-gray-800">
-          <button className="w-full px-4 py-2.5 bg-gray-800 hover:bg-gray-700 rounded-lg text-gray-300 transition font-medium">
-            Logout
-          </button>
+        {/* Footer */}
+        <div className="sidebar-footer">
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: isOpen ? 10 : 0,
+                justifyContent: isOpen ? 'flex-start' : 'center',
+                background: 'rgba(252,129,129,0.07)',
+                color: '#FC8181',
+                border: '1px solid rgba(252,129,129,0.18)',
+                padding: '9px 12px',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontSize: 12,
+                fontWeight: 700,
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: '0.06em',
+                transition: 'all 0.2s',
+                marginBottom: isOpen ? 10 : 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}
+              title="Logout"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              </svg>
+              {isOpen && <span>Logout</span>}
+            </button>
+          )}
+          {isOpen && (
+            <p className="sidebar-footer-text">CHASSA ENGINEERING DRIVES</p>
+          )}
         </div>
       </aside>
     </>

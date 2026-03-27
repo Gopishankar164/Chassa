@@ -25,7 +25,7 @@
   flex: 1;
   background: #0D1117;
   overflow-y: auto;
-  min-height: calc(100vh - 62px);
+  min-height: 100vh;
 }
 
 @media (max-width: 768px) {

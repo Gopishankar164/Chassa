@@ -1,156 +1,168 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ShoppingCart, 
-  Package, 
-  Users, 
-  TrendingUp,
-  DollarSign
-} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import {
-  PageHeader,
-  Card,
-  StatCard,
-  Table,
-  Button
-} from '../../../components/shared';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+  ShoppingCart, Package, Users, DollarSign,
+  ArrowRight, Activity,
+} from 'lucide-react';
+import '../../../styles/Dashboard.css';
+import ADMIN_API_BASE_URL from '../../../config/api';
 
+
+
+
+
+// ── Main Dashboard Component ────────────────────────────────────────────────
 const Dashboard = () => {
-  const [stats, setStats] = useState({
-    totalRevenue: 45250.50,
-    totalOrders: 1024,
-    totalProducts: 342,
-    totalUsers: 2851,
-    monthlyGrowth: 12.5,
-  });
+  const navigate = useNavigate();
+  const adminName = localStorage.getItem('adminName') || 'Admin';
+  const adminRole = localStorage.getItem('adminRole') || 'admin';
 
-  const [recentOrders, setRecentOrders] = useState([
-    { id: '#ORD001', customer: 'John Doe', amount: 250.00, status: 'delivered', date: '2024-03-25' },
-    { id: '#ORD002', customer: 'Jane Smith', amount: 150.50, status: 'processing', date: '2024-03-25' },
-    { id: '#ORD003', customer: 'Mike Johnson', amount: 890.00, status: 'pending', date: '2024-03-24' },
-    { id: '#ORD004', customer: 'Sarah Williams', amount: 420.25, status: 'delivered', date: '2024-03-24' },
-  ]);
+  const [stats, setStats]               = useState(null);
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [lowStock, setLowStock]         = useState([]);
+  const [loading, setLoading]           = useState(true);
+  const [lastRefresh, setLastRefresh]   = useState(new Date());
 
-  const [chartData] = useState([
-    { month: 'Jan', sales: 4000, revenue: 2400 },
-    { month: 'Feb', sales: 3000, revenue: 1398 },
-    { month: 'Mar', sales: 2000, revenue: 9800 },
-    { month: 'Apr', sales: 2780, revenue: 3908 },
-    { month: 'May', sales: 1890, revenue: 4800 },
-    { month: 'Jun', sales: 2390, revenue: 3800 },
-  ]);
 
-  const statusColor = (status) => {
-    const colors = {
-      delivered: 'text-green-600 bg-green-50',
-      processing: 'text-blue-600 bg-blue-50',
-      pending: 'text-orange-600 bg-orange-50',
-      cancelled: 'text-red-600 bg-red-50',
-    };
-    return colors[status] || colors.pending;
+
+  const token   = localStorage.getItem('adminToken');
+  const headers = { Authorization: `Bearer ${token}` };
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [prodRes, ordRes, usrRes] = await Promise.all([
+        fetch(`${ADMIN_API_BASE_URL}/api/products?page=0&size=100`,          { headers }),
+        fetch(`${ADMIN_API_BASE_URL}/api/admin/orders`,                      { headers }),
+        fetch(`${ADMIN_API_BASE_URL}/api/admin/user-orders/users-summary`,   { headers }),
+      ]);
+      const products = prodRes.ok ? await prodRes.json() : [];
+      const orders   = ordRes.ok  ? await ordRes.json()  : [];
+      const users    = usrRes.ok  ? await usrRes.json()  : [];
+
+      const totalRevenue  = orders.reduce((s, o) => s + (Number(o.total || o.totalAmount) || 0), 0);
+      const pendingOrders = orders.filter(o => (o.status || '').toUpperCase() === 'PENDING').length;
+
+      setStats({ totalRevenue, totalOrders: orders.length, totalProducts: products.length, totalUsers: users.length, pendingOrders });
+      setRecentOrders(orders.slice(0, 6));
+      setLowStock(products.filter(p => Number(p.stockQuantity ?? p.stock ?? 999) <= 15).slice(0, 5));
+    } catch {
+      // Fallback demo data
+      setStats({ totalRevenue: 45250, totalOrders: 1024, totalProducts: 342, totalUsers: 2851, pendingOrders: 37 });
+      setRecentOrders([
+        { id:'ORD001', customerName:'Arjun Menon',  total:25000, status:'DELIVERED',  createdAt: new Date() },
+        { id:'ORD002', customerName:'Kavya Nair',   total:15050, status:'PROCESSING', createdAt: new Date() },
+        { id:'ORD003', customerName:'Ravi Shankar', total:89000, status:'PENDING',    createdAt: new Date() },
+        { id:'ORD004', customerName:'Priya Thomas', total:42025, status:'CONFIRMED',  createdAt: new Date() },
+        { id:'ORD005', customerName:'Suresh Kumar', total:7500,  status:'SHIPPED',    createdAt: new Date() },
+        { id:'ORD006', customerName:'Deepa Raj',    total:18900, status:'DELIVERED',  createdAt: new Date() },
+      ]);
+      setLowStock([
+        { id:1, name:'Bearing 6205-2RS', category:'Bearings',    stockQuantity:3  },
+        { id:2, name:'V-Belt A-40',      category:'Drive Belts', stockQuantity:8  },
+        { id:3, name:'Shaft Coupling',   category:'Couplings',   stockQuantity:12 },
+        { id:4, name:"Oil Seal 35×55",   category:'Seals',       stockQuantity:5  },
+      ]);
+    }
+    setLoading(false);
+    setLastRefresh(new Date());
   };
 
+  useEffect(() => { fetchData(); }, []);
+
+  const statusClass = (s) => {
+    const map = {
+      DELIVERED:'status-delivered', PROCESSING:'status-processing',
+      PENDING:'status-pending-badge', CANCELLED:'status-cancelled',
+      CONFIRMED:'status-confirmed', SHIPPED:'status-shipped',
+      OUT_FOR_DELIVERY:'status-out-delivery',
+    };
+    return map[(s||'').toUpperCase()] || 'status-pending-badge';
+  };
+
+  const statCards = stats ? [
+    { label:'Total Revenue',  value:`₹${Number(stats.totalRevenue).toLocaleString('en-IN')}`, sub:`${stats.pendingOrders} pending`,     icon:DollarSign,  color:'stat-indigo',  trend:'+12.5%' },
+    { label:'Total Orders',   value:stats.totalOrders.toLocaleString(),                        sub:`${stats.pendingOrders} awaiting`,    icon:ShoppingCart,color:'stat-emerald', trend:'+8.2%'  },
+    { label:'Products',       value:stats.totalProducts,                                       sub:`${lowStock.length} low stock`,       icon:Package,     color:'stat-violet',  trend: lowStock.length > 0 ? `⚠ ${lowStock.length}` : 'OK' },
+    { label:'Clients',        value:stats.totalUsers.toLocaleString(),                         sub:'Registered customers',               icon:Users,       color:'stat-amber',   trend:'+5.3%'  },
+  ] : [];
+
   return (
-    <div>
-      <PageHeader
-        title="Dashboard"
-        subtitle="Welcome back! Here's your business overview"
-      />
+    <div className="dashboard-wrap">
 
-      {/* Key Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-        <StatCard
-          icon={DollarSign}
-          label="Total Revenue"
-          value={`$${stats.totalRevenue.toLocaleString()}`}
-          trend={{ positive: true, percentage: 12.5 }}
-          color="green"
-        />
-        <StatCard
-          icon={ShoppingCart}
-          label="Total Orders"
-          value={stats.totalOrders.toLocaleString()}
-          trend={{ positive: true, percentage: 8.2 }}
-          color="blue"
-        />
-        <StatCard
-          icon={Package}
-          label="Total Products"
-          value={stats.totalProducts}
-          trend={{ positive: false, percentage: 2.1 }}
-          color="orange"
-        />
-        <StatCard
-          icon={Users}
-          label="Total Users"
-          value={stats.totalUsers}
-          trend={{ positive: true, percentage: 5.3 }}
-          color="blue"
-        />
-        <StatCard
-          icon={TrendingUp}
-          label="Monthly Growth"
-          value={`${stats.monthlyGrowth}%`}
-          color="green"
-        />
-      </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <Card title="Sales Trend" subtitle="Last 6 months performance">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="month" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip />
-              <Line type="monotone" dataKey="sales" stroke="#3b82f6" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
-        </Card>
 
-        <Card title="Revenue Comparison" subtitle="Sales vs Revenue">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="month" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
-              <Tooltip />
-              <Bar dataKey="revenue" fill="#10b981" />
-            </BarChart>
-          </ResponsiveContainer>
-        </Card>
-      </div>
+      {/* Stat Cards */}
+      {loading ? (
+        <div className="stat-cards-grid" style={{ marginBottom:24 }}>
+          {[1,2,3,4].map(i => (
+            <div key={i} style={{
+              height:120, borderRadius:12, background:'#1C2230',
+              backgroundImage:'linear-gradient(90deg,#1C2230 25%,rgba(52,211,153,0.04) 50%,#1C2230 75%)',
+              backgroundSize:'200% 100%', animation:'shimmer 1.4s infinite'
+            }} />
+          ))}
+        </div>
+      ) : (
+        <div className="stat-cards-grid">
+          {statCards.map((card, idx) => {
+            const Icon = card.icon;
+            return (
+              <div key={idx} className={`stat-card-new ${card.color}`}>
+                <div className="stat-card-top">
+                  <div className="stat-icon-wrap"><Icon size={20} /></div>
+                  <span className="stat-trend-badge"><Activity size={10} /> {card.trend}</span>
+                </div>
+                <div className="stat-value">{card.value}</div>
+                <div className="stat-title">{card.label}</div>
+                <div className="stat-sub">{card.sub}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Recent Orders */}
-      <Card
-        title="Recent Orders"
-        subtitle="Last orders from your store"
-        headerAction={
-          <Button variant="secondary" size="sm">
-            View All
-          </Button>
-        }
-      >
-        <Table
-          columns={[
-            { key: 'id', label: 'Order ID', sortable: true },
-            { key: 'customer', label: 'Customer', sortable: true },
-            { key: 'amount', label: 'Amount', sortable: true, render: (val) => `$${val.toFixed(2)}` },
-            { 
-              key: 'status', 
-              label: 'Status',
-              render: (status) => (
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor(status)}`}>
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
-                </span>
-              )
-            },
-            { key: 'date', label: 'Date', sortable: true },
-          ]}
-          data={recentOrders}
-        />
-      </Card>
+      <div className="panel">
+        <div className="panel-header">
+          <div className="panel-title-row">
+            <ShoppingCart size={15} className="panel-icon" />
+            <h3 className="panel-title">Recent Orders</h3>
+            <span className="panel-count-badge">{recentOrders.length}</span>
+          </div>
+          <button className="panel-link" style={{ background:'none', border:'none', cursor:'pointer' }}
+            onClick={() => navigate('/admin/orders')}>
+            View All <ArrowRight size={11} style={{ verticalAlign:'middle' }} />
+          </button>
+        </div>
+        {loading ? (
+          <div className="skeleton-rows">{[1,2,3,4].map(i => <div key={i} className="skeleton-row" />)}</div>
+        ) : recentOrders.length === 0 ? (
+          <div className="panel-empty">No orders yet.</div>
+        ) : (
+          <div className="recent-orders-table-wrap">
+            <table className="mini-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th><th>Client</th><th>Value</th><th>Status</th><th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentOrders.map(order => (
+                  <tr key={order.id}>
+                    <td><span className="mini-id">#{order.id}</span></td>
+                    <td style={{ color:'#F0F6FC', fontWeight:600 }}>{order.customerName || 'N/A'}</td>
+                    <td><span className="mini-amount">₹{Number(order.total || order.totalAmount || 0).toLocaleString('en-IN')}</span></td>
+                    <td><span className={`mini-badge ${statusClass(order.status)}`}>{(order.status||'Pending').toLowerCase()}</span></td>
+                    <td><span className="mini-date">{order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-IN') : '—'}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };

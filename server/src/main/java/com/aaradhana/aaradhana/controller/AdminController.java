@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -32,6 +33,9 @@ public class AdminController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/orders/list")
     public ResponseEntity<List<Order>> getAllOrdersForAdmin() {
@@ -386,6 +390,142 @@ public class AdminController {
             return ResponseEntity.ok(Map.of("message", "Admin created successfully", "admin", savedAdmin));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("message", "Error: " + e.getMessage()));
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // STAFF MANAGEMENT  (Admin-only: ROLE_ADMIN required)
+    // Endpoints used by the Staff Management page in the Admin panel.
+    // ════════════════════════════════════════════════════════════════════════
+
+    /**
+     * GET /api/admin/staff
+     * Returns all accounts whose role is "STAFF".
+     * Password is excluded from the response for security.
+     */
+    @GetMapping("/staff")
+    public ResponseEntity<?> listStaff() {
+        try {
+            List<Admin> staffList = adminRepository.findByRole("STAFF");
+            // Build sanitized response (never expose hashed passwords)
+            List<Map<String, Object>> result = staffList.stream().map(s -> {
+                Map<String, Object> m = new LinkedHashMap<>();
+                m.put("id",        s.getId());
+                m.put("name",      s.getName());
+                m.put("email",     s.getEmail());
+                m.put("role",      s.getRole());
+                m.put("active",    s.getActive() != null ? s.getActive() : true);
+                m.put("createdAt", s.getCreatedAt() != null ? s.getCreatedAt().toString() : null);
+                return m;
+            }).collect(Collectors.toList());
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error fetching staff: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * POST /api/admin/staff
+     * Body: { name, email, password, role? }
+     * Creates a new STAFF account. Email must be unique.
+     */
+    @PostMapping("/staff")
+    public ResponseEntity<?> createStaff(@RequestBody Map<String, String> body) {
+        try {
+            String name     = body.get("name");
+            String email    = body.get("email");
+            String password = body.get("password");
+
+            if (name == null || name.isBlank() ||
+                email == null || !email.contains("@") ||
+                password == null || password.length() < 6) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Name, valid email, and password (min 6 chars) are required."));
+            }
+
+            if (adminRepository.findByEmail(email) != null) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("message", "An account with this email already exists."));
+            }
+
+            Admin staff = new Admin();
+            staff.setName(name);
+            staff.setEmail(email);
+            staff.setPassword(passwordEncoder.encode(password));
+            staff.setRole("STAFF");
+            staff.setActive(true);
+            staff.setCreatedAt(LocalDateTime.now());
+
+            Admin saved = adminRepository.save(staff);
+
+            // Return sanitized response
+            Map<String, Object> resp = new LinkedHashMap<>();
+            resp.put("id",        saved.getId());
+            resp.put("name",      saved.getName());
+            resp.put("email",     saved.getEmail());
+            resp.put("role",      saved.getRole());
+            resp.put("active",    saved.getActive());
+            resp.put("createdAt", saved.getCreatedAt() != null ? saved.getCreatedAt().toString() : null);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error creating staff: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * DELETE /api/admin/staff/{id}
+     * Permanently removes a STAFF account.
+     * Only STAFF accounts can be deleted this way — prevents accidental admin deletion.
+     */
+    @DeleteMapping("/staff/{id}")
+    public ResponseEntity<?> deleteStaff(@PathVariable String id) {
+        try {
+            Optional<Admin> opt = adminRepository.findById(id);
+            if (opt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "Staff account not found."));
+            }
+            Admin target = opt.get();
+            // Safety guard: prevent deleting ADMIN accounts via this endpoint
+            if ("ADMIN".equalsIgnoreCase(target.getRole())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("message", "Cannot delete an ADMIN account via the staff endpoint."));
+            }
+            adminRepository.deleteById(id);
+            return ResponseEntity.ok(Map.of("message", "Staff account removed successfully.", "id", id));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error deleting staff: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * PATCH /api/admin/staff/{id}/toggle-active
+     * Enables or disables a staff account without deleting it.
+     */
+    @PatchMapping("/staff/{id}/toggle-active")
+    public ResponseEntity<?> toggleStaffActive(@PathVariable String id) {
+        try {
+            Optional<Admin> opt = adminRepository.findById(id);
+            if (opt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "Staff account not found."));
+            }
+            Admin staff = opt.get();
+            if ("ADMIN".equalsIgnoreCase(staff.getRole())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("message", "Cannot modify an ADMIN account via the staff endpoint."));
+            }
+            boolean newStatus = !Boolean.TRUE.equals(staff.getActive());
+            staff.setActive(newStatus);
+            adminRepository.save(staff);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Staff account " + (newStatus ? "activated" : "deactivated") + " successfully.",
+                    "id",     id,
+                    "active", newStatus
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error toggling staff: " + e.getMessage()));
         }
     }
 }

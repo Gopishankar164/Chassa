@@ -3,9 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useCart } from "../context/CartContext";
-import { ChevronLeft, Heart, ShoppingBag, Star, Truck, RotateCcw, Shield } from "lucide-react";
+import { ChevronLeft, Heart, ShoppingBag, Truck, RotateCcw, Shield } from "lucide-react";
 import API_BASE_URL from "../config/api";
-import ReviewDisplay from "./reviews/ReviewDisplay";
 import "./ProductDetail.css";
 
 export default function ProductDetail() {
@@ -200,24 +199,6 @@ export default function ProductDetail() {
               <h1 className="pd-name">{product.name}</h1>
               <p className="pd-brand">by {product.brand}</p>
 
-              {/* Rating — always visible */}
-              <div className="pd-rating">
-                {[1, 2, 3, 4, 5].map(s => (
-                  <Star
-                    key={s}
-                    size={16}
-                    fill={s <= Math.round(product.averageRating || 0) ? "var(--accent)" : "none"}
-                    stroke={s <= Math.round(product.averageRating || 0) ? "var(--accent)" : "#ccc"}
-                  />
-                ))}
-                <a
-                  href="#reviews"
-                  className="pd-rating-count"
-                  onClick={e => { e.preventDefault(); document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' }); }}
-                >
-                  ({product.totalReviews || 0} reviews)
-                </a>
-              </div>
 
               {/* Price */}
               <div className="pd-price-label-tag">Quotation / Price</div>
@@ -316,10 +297,6 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* Reviews section with anchor */}
-          <div id="reviews">
-            <ReviewDisplay productId={product.id} />
-          </div>
 
         </div>
       </main>

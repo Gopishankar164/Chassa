@@ -29,7 +29,21 @@
   --g-r2:          12px;
 }
 
-/* Page wrapper */
+/* ── Global input/textarea/select text visibility fix ── */
+/* Ensures typed text is always visible across all admin forms */
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+textarea,
+select {
+  color: #F0F6FC;
+  background-color: #212D3A;
+  border-color: rgba(52, 211, 153, 0.18);
+}
+
+input[type="file"] {
+  color: #8B949E;
+}
+
+
 .page-wrap {
   padding: 30px;
   animation: pageFadeIn 0.30s ease;
